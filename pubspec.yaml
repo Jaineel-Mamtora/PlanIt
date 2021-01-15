@@ -46,7 +46,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/logo.png"
+  image_path: "assets/icons/squircle_planit.png"
 
 flutter:
   uses-material-design: true
