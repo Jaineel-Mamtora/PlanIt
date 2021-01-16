@@ -19,7 +19,10 @@ class HomeViewModel extends BaseViewModel {
   var pendingTasks = <Task>[];
   var completedTasks = <Task>[];
 
-  Future<void> onModelReady() async {
+  Future<void> onModelReady({int taskId, int fromTime}) async {
+    if (taskId != 0 && fromTime != 0) {
+      setSelectedDate(DateTime.fromMillisecondsSinceEpoch(fromTime));
+    }
     pendingTasks = await _databaseService
         .queryPendingTask(getSelectedDate().millisecondsSinceEpoch);
     completedTasks = await _databaseService
@@ -48,16 +51,6 @@ class HomeViewModel extends BaseViewModel {
 
   Future logout() async {
     await _firebaseAuthenticationService.signOut();
-  }
-
-  Future showNotification() async {
-    await _notificationHandler.showBigTextNotification(
-      id: 1,
-      title: 'Hello',
-      body:
-          'Welcome to PlanIt! The application will help you to organise your task efficiently. Have a good day!',
-      payload: '{}',
-    );
   }
 
   void setSelectedDate(DateTime date) {

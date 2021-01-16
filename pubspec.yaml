@@ -39,14 +39,14 @@ dependencies:
   flutter_native_timezone: ^1.0.4
 
 dev_dependencies:
-  flutter_launcher_icons:
+  # flutter_launcher_icons:
   flutter_test:
     sdk: flutter
 
-flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icons/squircle_planit.png"
+# flutter_icons:
+#   android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/icons/squircle_planit.png"
 
 flutter:
   uses-material-design: true

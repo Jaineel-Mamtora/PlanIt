@@ -22,7 +22,13 @@ class StartUpViewModel extends BaseViewModel {
     // } else {
     //   await _navigationService.pushNamedAndRemoveUntil(SignUpView.routeName);
     // }
-    _navigationService.pushNamedAndRemoveUntil(HomeView.routeName);
+    _navigationService.pushNamedAndRemoveUntil(
+      HomeView.routeName,
+      arguments: {
+        'taskId': 0,
+        'fromTime': 0,
+      },
+    );
   }
 
   void onModelDestroy() {}

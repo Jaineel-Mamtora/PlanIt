@@ -532,6 +532,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                                       : 'Todo: ${task.title} from ${DateFormat("hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(task.fromTime))} to ${DateFormat("hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(task.toTime))}',
                                   payload: jsonEncode({
                                     'type': 'reminder',
+                                    'id': task.id,
                                     'fromTime': task.fromTime -
                                         getReminderMilliseconds(
                                           _defaultChoiceIndex,
@@ -539,7 +540,8 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                                   }),
                                 );
                               }
-                              widget.model.onModelReady();
+                              // removed purposefully
+                              // widget.model.onModelReady();
                               Navigator.of(context).pop(true);
                             }
                           },

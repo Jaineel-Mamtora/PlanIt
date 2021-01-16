@@ -12,10 +12,11 @@ class CustomRouter {
       case SignUpView.routeName:
         return MaterialPageRoute(builder: (_) => SignUpView());
       case HomeView.routeName:
-        var _args = settings.arguments as int;
+        var _args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => HomeView(
-            taskId: _args,
+            taskId: _args['taskId'],
+            dateInEpoch: _args['fromTime'],
           ),
         );
       case VerificationView.routeName:

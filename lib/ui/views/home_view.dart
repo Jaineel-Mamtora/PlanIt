@@ -14,10 +14,12 @@ class HomeView extends StatefulWidget {
   static const routeName = '/home';
 
   final int taskId;
+  final int dateInEpoch;
 
   const HomeView({
     Key key,
     this.taskId,
+    this.dateInEpoch,
   }) : super(key: key);
 
   @override
@@ -72,7 +74,10 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(
       onModelReady: (model) {
-        model.onModelReady();
+        model.onModelReady(
+          taskId: widget.taskId,
+          fromTime: widget.dateInEpoch,
+        );
       },
       builder: (context, model, child) {
         return DefaultTabController(
@@ -81,16 +86,11 @@ class _HomeViewState extends State<HomeView> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               elevation: 2,
-              title: GestureDetector(
-                onTap: () {
-                  model.showNotification();
-                },
-                child: Text(
-                  'PlanIt',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                  ),
+              title: Text(
+                'PlanIt',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
                 ),
               ),
               bottom: PreferredSize(
@@ -237,7 +237,10 @@ class _HomeViewState extends State<HomeView> {
                 RefreshIndicator(
                   key: _refreshIndicatorKey1,
                   onRefresh: () async {
-                    await model.onModelReady();
+                    await model.onModelReady(
+                      taskId: widget.taskId,
+                      fromTime: widget.dateInEpoch,
+                    );
                   },
                   child: NotificationListener<OverscrollIndicatorNotification>(
                     onNotification:
@@ -291,7 +294,10 @@ class _HomeViewState extends State<HomeView> {
                 RefreshIndicator(
                   key: _refreshIndicatorKey2,
                   onRefresh: () async {
-                    await model.onModelReady();
+                    await model.onModelReady(
+                      taskId: widget.taskId,
+                      fromTime: widget.dateInEpoch,
+                    );
                   },
                   child: NotificationListener<OverscrollIndicatorNotification>(
                     onNotification:
