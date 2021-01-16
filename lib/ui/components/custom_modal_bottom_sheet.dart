@@ -507,19 +507,23 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                           onPressed: () async {
-                            bool status = false;
-                            if (_controller.text.trim().isEmpty) {
+                            if (_controller.text.trim().isEmpty ||
+                                _selectedFromTime == null) {
                               Fluttertoast.showToast(
-                                msg: TaskConstants.PLEASE_ENTER_A_TITLE,
+                                msg: TaskConstants
+                                    .PLEASE_ENTER_TITLE_AND_START_TIME,
                               );
                               return;
                             }
                             // add logic of Time-Slot already added. Currently not working
                             // also check for test case where only title is added and nothing else
-                            if (status == true) {
+                            if (widget.model.isTaskTimeSlotOverlapping(
+                                fromTime: _selectedFromTime,
+                                toTime: _selectedToTime)) {
                               Fluttertoast.showToast(
                                 msg: TaskConstants.TIME_SLOT_ALREADY_ADDED,
                               );
+                              return;
                             } else {
                               var task = Task(
                                 date: widget.model
@@ -584,7 +588,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                                   payload: jsonEncode({
                                     DatabaseConstants.ID: task.id,
                                     NotificationConstants.NOTIFICATION_TYPE:
-                                        DatabaseConstants.FROM_TIME,
+                                        DatabaseConstants.REMINDER,
                                     DatabaseConstants.FROM_TIME: task.fromTime -
                                         getReminderMilliseconds(
                                           _defaultChoiceIndex,

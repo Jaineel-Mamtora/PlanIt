@@ -208,35 +208,37 @@ class CustomCard extends StatelessWidget {
                     : Container(width: 0, height: 0),
               ],
             ),
-            trailing: taskEntity.priority != 0 && taskEntity.reminder == -1
-                ? Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: SvgPicture.asset(
-                      getReminderSVG(taskEntity.priority),
-                      height: 12,
-                    ),
-                  )
-                : taskEntity.priority == 0 && taskEntity.reminder != -1
-                    ? SvgPicture.asset(
-                        'assets/icons/bell_notification.svg',
-                        width: 26,
-                      )
-                    : Container(
-                        width: 50,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            SvgPicture.asset(
-                              getReminderSVG(taskEntity.priority),
-                              height: 12,
-                            ),
-                            SvgPicture.asset(
-                              'assets/icons/bell_notification.svg',
-                              width: 26,
-                            )
-                          ],
+            trailing: taskEntity.priority == 0 && taskEntity.reminder == -1
+                ? Container(width: 0)
+                : taskEntity.priority != 0 && taskEntity.reminder == -1
+                    ? Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: SvgPicture.asset(
+                          getReminderSVG(taskEntity.priority),
+                          height: 12,
                         ),
-                      ),
+                      )
+                    : taskEntity.priority == 0 && taskEntity.reminder != -1
+                        ? SvgPicture.asset(
+                            'assets/icons/bell_notification.svg',
+                            width: 26,
+                          )
+                        : Container(
+                            width: 50,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                SvgPicture.asset(
+                                  getReminderSVG(taskEntity.priority),
+                                  height: 12,
+                                ),
+                                SvgPicture.asset(
+                                  'assets/icons/bell_notification.svg',
+                                  width: 26,
+                                )
+                              ],
+                            ),
+                          ),
           ),
         ),
       ),

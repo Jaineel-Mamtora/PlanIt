@@ -28,7 +28,8 @@ class HomeViewModel extends BaseViewModel {
         .queryPendingTask(getSelectedDate().millisecondsSinceEpoch);
     completedTasks = await _databaseService
         .queryCompletedTask(getSelectedDate().millisecondsSinceEpoch);
-
+    pendingTasks.sort((a, b) => a.fromTime.compareTo(b.fromTime));
+    completedTasks.sort((a, b) => a.fromTime.compareTo(b.fromTime));
     notifyListeners();
     if (_localStorageService.isNotificationClicked == true) {
       await _notificationHandler.initLocalNotification();
@@ -58,6 +59,32 @@ class HomeViewModel extends BaseViewModel {
     var epochTime = dateTimeToEpoch(date);
     selectedDate = epochTime;
     notifyListeners();
+  }
+
+  bool isTaskTimeSlotOverlapping({DateTime fromTime, DateTime toTime}) {
+    int flag = 0;
+    int fromTimeEpoch = fromTime.millisecondsSinceEpoch;
+    int toTimeEpoch;
+    if (toTime != null) {
+      toTimeEpoch = toTime.millisecondsSinceEpoch;
+    }
+    pendingTasks.forEach((pendingTask) {
+      if (fromTimeEpoch >= pendingTask.fromTime &&
+          fromTimeEpoch < pendingTask.toTime) {
+        flag = 1;
+      } else if (toTimeEpoch != null &&
+          fromTimeEpoch >= pendingTask.fromTime &&
+          toTimeEpoch < pendingTask.toTime) {
+        flag = 1;
+      } else if (pendingTask.fromTime == fromTimeEpoch) {
+        flag = 1;
+      }
+    });
+    if (flag == 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   DateTime getSelectedDate() {

@@ -90,16 +90,17 @@ class TaskConstants {
   static const String PLEASE_SELECT_START_TIME = 'Please select Start Time!';
   static const String PLEASE_SELECT_VALID_END_TIME =
       'Please select valid End Time!';
-  static const String TITLE = 'Title';
+  static const String TITLE = 'Title*';
   static const String REMIND_ME = 'Remind Me';
   static const String PLEASE_SELECT_START_TIME_FIRST =
       'Please select start time first!';
   static const String PLEASE_SELECT_VALID_START_TIME =
       'Please select valid start time.';
   static const String PRIORITY = 'Priority';
-  static const String PLEASE_ENTER_A_TITLE = 'Please enter a Title!';
+  static const String PLEASE_ENTER_TITLE_AND_START_TIME =
+      'Please enter Title and Start Time.';
   static const String TIME_SLOT_ALREADY_ADDED = 'Time Slot already added!';
-  static const String MODAL_SHEET_FROM_TIME = 'From: %s';
+  static const String MODAL_SHEET_FROM_TIME = 'From:* %s';
   static const String MODAL_SHEET_TO_TIME = 'To: %s';
   static const String REMINDER = 'Reminder';
   static const String PENDING = 'Pending';
