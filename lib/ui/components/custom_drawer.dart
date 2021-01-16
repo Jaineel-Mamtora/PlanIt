@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:PlanIt/colors.dart';
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/services/firebase_authentication_service.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -44,14 +45,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         width: 100,
                       ),
                       title: Text(
-                        'PlanIt',
+                        APP_NAME,
                         style: TextStyle(
                           fontSize: 20,
                         ),
                       ),
                       subtitle: user != null
                           ? Text(
-                              "${user.email}",
+                              user.email,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
@@ -75,7 +76,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   color: Theme.of(context).primaryColor,
                 ),
                 label: Text(
-                  'SIGN OUT',
+                  GeneralConstants.SIGN_OUT,
                   style: TextStyle(
                     fontSize: 16,
                     letterSpacing: 1.5,

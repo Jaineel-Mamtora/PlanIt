@@ -1,3 +1,4 @@
+import 'package:PlanIt/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -87,7 +88,7 @@ class _HomeViewState extends State<HomeView> {
               backgroundColor: Colors.white,
               elevation: 2,
               title: Text(
-                'PlanIt',
+                APP_NAME,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -111,7 +112,7 @@ class _HomeViewState extends State<HomeView> {
                       tabs: [
                         Tab(
                           child: Text(
-                            'Pending',
+                            TaskConstants.PENDING,
                             style: TextStyle(
                               color: Colors.black,
                             ),
@@ -119,7 +120,7 @@ class _HomeViewState extends State<HomeView> {
                         ),
                         Tab(
                           child: Text(
-                            'Completed',
+                            TaskConstants.COMPLETED,
                             style: TextStyle(
                               color: Colors.black,
                             ),
@@ -393,7 +394,7 @@ class _HomeViewState extends State<HomeView> {
                       child: Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Text(
-                          'What do you need to do?',
+                          TaskConstants.WHAT_DO_YOU_NEED_TO_DO,
                           style: TextStyle(
                             fontSize: 18,
                             color: GREY,

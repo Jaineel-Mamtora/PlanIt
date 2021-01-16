@@ -1,13 +1,15 @@
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/managers/notification_handler.dart';
-import 'package:PlanIt/services/database_service.dart';
 import 'package:intl/intl.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:PlanIt/colors.dart';
+import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/models/task.dart';
+import 'package:PlanIt/services/database_service.dart';
+import 'package:PlanIt/managers/notification_handler.dart';
 
 class CustomCard extends StatelessWidget {
   final _databaseService = locator<DatabaseService>();
@@ -37,14 +39,14 @@ class CustomCard extends StatelessWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         title: Text(
-          'Achievement!',
+          TaskConstants.ACHIEVEMENT,
           style: TextStyle(
             fontSize: 16,
             color: Theme.of(context).primaryColorDark,
           ),
         ),
         content: Text(
-          'Do you want to mark this task as completed?',
+          TaskConstants.DO_YOU_WANT_TO_MARK_THIS_TASK_AS_COMPLETED,
           style: TextStyle(
             fontSize: 14,
             color: Theme.of(context).primaryColorDark,
@@ -52,26 +54,26 @@ class CustomCard extends StatelessWidget {
         ),
         actions: <Widget>[
           FlatButton(
-            child: Text('NO'),
+            child: Text(GeneralConstants.NO),
             onPressed: () {
               Navigator.of(ctx).pop(false);
             },
           ),
           FlatButton(
-            child: Text('YES'),
+            child: Text(GeneralConstants.YES),
             onPressed: () async {
               await _databaseService.update({
-                id: taskEntity.id,
-                title: taskEntity.title,
-                fromTime: taskEntity.fromTime,
-                date: taskEntity.date,
-                toTime: taskEntity.toTime,
-                reminder: taskEntity.reminder,
-                priority: taskEntity.priority,
-                status: 1,
+                DatabaseConstants.ID: taskEntity.id,
+                DatabaseConstants.TITLE: taskEntity.title,
+                DatabaseConstants.FROM_TIME: taskEntity.fromTime,
+                DatabaseConstants.DATE: taskEntity.date,
+                DatabaseConstants.TO_TIME: taskEntity.toTime,
+                DatabaseConstants.REMINDER: taskEntity.reminder,
+                DatabaseConstants.PRIORITY: taskEntity.priority,
+                DatabaseConstants.STATUS: 1,
               });
               Fluttertoast.showToast(
-                msg: 'Task mark as done successfully!',
+                msg: TaskConstants.TASK_MARKED_AS_DONE_SUCCESSFULLY,
                 backgroundColor: Colors.green,
                 textColor: Colors.white,
               );
@@ -109,14 +111,14 @@ class CustomCard extends StatelessWidget {
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text(
-              'Are you sure?',
+              TaskConstants.ARE_YOU_SURE,
               style: TextStyle(
                 fontSize: 16,
                 color: Theme.of(context).primaryColorDark,
               ),
             ),
             content: Text(
-              'Do you want to remove pending Task?',
+              TaskConstants.DO_YOU_WANT_TO_REMOVE_PENDING_TASK,
               style: TextStyle(
                 fontSize: 14,
                 color: Theme.of(context).primaryColorDark,
@@ -124,16 +126,16 @@ class CustomCard extends StatelessWidget {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('NO'),
+                child: Text(GeneralConstants.NO),
                 onPressed: () {
                   Navigator.of(ctx).pop(false);
                 },
               ),
               FlatButton(
-                child: Text('YES'),
+                child: Text(GeneralConstants.YES),
                 onPressed: () {
                   Fluttertoast.showToast(
-                    msg: 'Task deleted successfully!',
+                    msg: TaskConstants.TASK_DELETED_SUCESSFULLY,
                     backgroundColor: GREEN,
                     textColor: Colors.white,
                   );
@@ -181,14 +183,24 @@ class CustomCard extends StatelessWidget {
             subtitle: Row(
               children: <Widget>[
                 Text(
-                  "${DateFormat("hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(taskEntity.fromTime))}",
+                  DateFormat('hh:mm a').format(
+                      DateTime.fromMillisecondsSinceEpoch(taskEntity.fromTime)),
                   style: TextStyle(
                     fontSize: 14,
                   ),
                 ),
                 taskEntity.toTime != null && taskEntity.toTime != 0
                     ? Text(
-                        " - ${DateFormat("hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(taskEntity.toTime))}",
+                        sprintf(
+                          TaskConstants.CUSTOM_CARD_TO_TIME,
+                          [
+                            DateFormat('hh:mm a').format(
+                              DateTime.fromMillisecondsSinceEpoch(
+                                taskEntity.toTime,
+                              ),
+                            ),
+                          ],
+                        ),
                         style: TextStyle(
                           fontSize: 14,
                         ),

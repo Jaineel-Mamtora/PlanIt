@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:PlanIt/colors.dart';
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/router.dart';
 import 'package:PlanIt/ui/views/startup_view.dart';
 import 'package:PlanIt/services/navigation_service.dart';
@@ -49,7 +50,7 @@ class MyPlanItApp extends StatelessWidget {
           }
         },
         child: MaterialApp(
-          title: 'PlanIt',
+          title: APP_NAME,
           debugShowCheckedModeBanner: false,
           navigatorKey: _navigationService.navigatorKey,
           onGenerateRoute: CustomRouter.generateRoute,
@@ -94,7 +95,7 @@ class MyPlanItApp extends StatelessWidget {
               ),
             ),
             primarySwatch: generateMaterialColor(Color(0xFF0080FF)),
-            fontFamily: 'OpenSans',
+            fontFamily: FONT_NAME,
             scaffoldBackgroundColor: Colors.white,
             cursorColor: Color(0xFF072F5F),
             highlightColor: Color(0xFFC2CFE1),

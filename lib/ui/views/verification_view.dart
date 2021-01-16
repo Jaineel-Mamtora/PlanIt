@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/base_view.dart';
 import 'package:PlanIt/ui/utils/background_clipper.dart';
 import 'package:PlanIt/viewmodels/verification_viewmodel.dart';
@@ -59,7 +60,7 @@ class VerificationView extends StatelessWidget {
                                 children: <Widget>[
                                   SizedBox(height: 8),
                                   Text(
-                                    'VERIFICATION PENDING',
+                                    AuthConstants.VERIFICATION_PENDING,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
@@ -68,7 +69,8 @@ class VerificationView extends StatelessWidget {
                                   ),
                                   SizedBox(height: 8),
                                   Text(
-                                    'Please click the link in the verification email sent to you.',
+                                    AuthConstants
+                                        .PLEASE_CLICK_THE_LINK_IN_THE_VERIFICATION_EMAIL_SENT_TO_YOU,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontSize: 14,
@@ -100,7 +102,7 @@ class VerificationView extends StatelessWidget {
                                       ),
                                       onPressed: () => model.refresh(context),
                                       child: Text(
-                                        'REFRESH',
+                                        AuthConstants.REFRESH,
                                         style: TextStyle(
                                           fontSize: 18,
                                           color: Theme.of(context).primaryColor,
@@ -130,7 +132,7 @@ class VerificationView extends StatelessWidget {
                                       onPressed: () =>
                                           model.sendVerificationMail(),
                                       child: Text(
-                                        'SEND MAIL AGAIN',
+                                        AuthConstants.SEND_MAIL_AGAIN,
                                         style: TextStyle(
                                           fontSize: 18,
                                           color: Theme.of(context).primaryColor,
@@ -163,7 +165,7 @@ class VerificationView extends StatelessWidget {
                                       ),
                                       onPressed: () => model.signOut(),
                                       child: Text(
-                                        'SIGN OUT',
+                                        AuthConstants.SIGN_OUT,
                                         style: TextStyle(
                                           fontSize: 18,
                                           color: Theme.of(context).primaryColor,

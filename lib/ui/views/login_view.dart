@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/base_view.dart';
 import 'package:PlanIt/ui/views/signup_view.dart';
 import 'package:PlanIt/viewmodels/login_viewmodel.dart';
@@ -95,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
                                         bottom: 20,
                                       ),
                                       child: Text(
-                                        'LOG IN',
+                                        AuthConstants.LOG_IN,
                                         style: TextStyle(
                                           fontSize: 30,
                                           letterSpacing: 1.5,
@@ -110,7 +111,7 @@ class _LoginViewState extends State<LoginView> {
                                       ),
                                       child: CustomTextField(
                                         controller: _emailController,
-                                        labelText: 'Email',
+                                        labelText: AuthConstants.EMAIL,
                                       ),
                                     ),
                                     Padding(
@@ -121,7 +122,7 @@ class _LoginViewState extends State<LoginView> {
                                       ),
                                       child: CustomTextField(
                                         controller: _passwordController,
-                                        labelText: 'Password',
+                                        labelText: AuthConstants.PASSWORD,
                                         obscureText: true,
                                         customMaxLines: 1,
                                       ),
@@ -140,7 +141,7 @@ class _LoginViewState extends State<LoginView> {
                                             _emailController.text,
                                           ),
                                           child: Text(
-                                            'Forgot Password?',
+                                            AuthConstants.FORGOT_PASSWORD,
                                             style: TextStyle(
                                               fontSize: 13,
                                               color: Theme.of(context)
@@ -190,7 +191,7 @@ class _LoginViewState extends State<LoginView> {
                                               FocusScope.of(context).unfocus();
                                             },
                                             child: Text(
-                                              'LOG IN',
+                                              AuthConstants.LOG_IN,
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: Theme.of(context)
@@ -222,7 +223,7 @@ class _LoginViewState extends State<LoginView> {
                                             ),
                                           ),
                                           Text(
-                                            'OR',
+                                            AuthConstants.OR,
                                             style: TextStyle(
                                               fontSize: 13,
                                             ),
@@ -276,7 +277,7 @@ class _LoginViewState extends State<LoginView> {
                                               ),
                                             ),
                                             label: Text(
-                                              'Sign in with Google',
+                                              AuthConstants.SIGN_IN_WITH_GOOGLE,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 20,
@@ -297,7 +298,7 @@ class _LoginViewState extends State<LoginView> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                    'Don\'t have an account?',
+                                    AuthConstants.DONT_HAVE_AN_ACCOUNT,
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,
@@ -310,7 +311,7 @@ class _LoginViewState extends State<LoginView> {
                                       );
                                     },
                                     child: Text(
-                                      'SIGN UP',
+                                      AuthConstants.SIGN_UP,
                                       style: TextStyle(
                                         fontSize: 16,
                                         color:

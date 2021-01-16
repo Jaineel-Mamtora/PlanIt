@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/models/task.dart';
 import 'package:PlanIt/ui/utils/date.dart';
 import 'package:PlanIt/services/database_service.dart';
@@ -44,7 +45,7 @@ class HomeViewModel extends BaseViewModel {
       initialDate: getSelectedDate(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2030),
-      helpText: 'Jump to a particular date',
+      helpText: CalendarConstants.JUMP_TO_A_PARTICULAR_DATE,
     );
     return pickedDate;
   }

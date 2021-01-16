@@ -1,8 +1,11 @@
+import 'package:sprintf/sprintf.dart';
+import 'package:flutter/material.dart';
+
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/home_view.dart';
 import 'package:PlanIt/ui/views/login_view.dart';
 import 'package:PlanIt/ui/views/signup_view.dart';
 import 'package:PlanIt/ui/views/verification_view.dart';
-import 'package:flutter/material.dart';
 
 class CustomRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -25,7 +28,12 @@ class CustomRouter {
         return MaterialPageRoute(
           builder: (_) => Scaffold(
             body: Center(
-              child: Text('No route defined for ${settings.name}'),
+              child: Text(
+                sprintf(
+                  GeneralConstants.NO_ROUTES_DEFINED,
+                  [settings.name],
+                ),
+              ),
             ),
           ),
         );

@@ -27,7 +27,6 @@ class BaseViewModel extends ChangeNotifier {
 
   void setupConnectivity() {
     _connectivityService.connectionStatusController.stream.listen((event) {
-      print('CONNECTIVITY SERVICE: $event');
       if (event == ConnectivityStatus.Offline) {
         setState(ViewState.NoConnection);
       } else {

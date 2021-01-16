@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:PlanIt/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,6 +16,7 @@ import 'package:PlanIt/viewmodels/home_viewmodel.dart';
 import 'package:PlanIt/services/database_service.dart';
 import 'package:PlanIt/managers/notification_handler.dart';
 import 'package:PlanIt/ui/components/custom_text_field.dart';
+import 'package:sprintf/sprintf.dart';
 
 class CustomModalBottomSheet extends StatefulWidget {
   final DateTime date;
@@ -106,7 +108,9 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
       initialTime: TimeOfDay.now(),
     ).then((pickedToTime) {
       if (_selectedFromTime == null && _selectedToTime != null) {
-        Fluttertoast.showToast(msg: 'Please select Start Time!');
+        Fluttertoast.showToast(
+          msg: TaskConstants.PLEASE_SELECT_START_TIME,
+        );
         setState(() {
           _isToTimeSelected = false;
         });
@@ -121,7 +125,9 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
       if (pickedToTime.hour < _selectedFromTime.hour ||
           (pickedToTime.hour <= _selectedFromTime.hour &&
               pickedToTime.minute <= _selectedFromTime.minute)) {
-        Fluttertoast.showToast(msg: 'Select valid End Time!');
+        Fluttertoast.showToast(
+          msg: TaskConstants.PLEASE_SELECT_VALID_END_TIME,
+        );
         setState(() {
           _isToTimeSelected = false;
         });
@@ -187,7 +193,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                         horizontal: 20,
                       ),
                       child: CustomTextField(
-                        labelText: 'Title',
+                        labelText: TaskConstants.TITLE,
                         controller: _controller,
                         customTextCapitalization: TextCapitalization.sentences,
                       ),
@@ -208,8 +214,13 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                         ),
                         title: Text(
                           _selectedFromTime == null
-                              ? 'From: ${DateFormat('hh:mm a').format(DateTime.now())}'
-                              : 'From: ${DateFormat('hh:mm a').format(_selectedFromTime)}',
+                              ? sprintf(TaskConstants.MODAL_SHEET_FROM_TIME, [
+                                  DateFormat('hh:mm a').format(DateTime.now())
+                                ])
+                              : sprintf(TaskConstants.MODAL_SHEET_FROM_TIME, [
+                                  DateFormat('hh:mm a')
+                                      .format(_selectedFromTime)
+                                ]),
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.black,
@@ -250,8 +261,20 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                               ),
                               title: Text(
                                 _selectedToTime == null
-                                    ? 'To: ${DateFormat('hh:mm a').format(DateTime.now())}'
-                                    : 'To: ${DateFormat('hh:mm a').format(_selectedToTime)}',
+                                    ? sprintf(
+                                        TaskConstants.MODAL_SHEET_TO_TIME,
+                                        [
+                                          DateFormat('hh:mm a')
+                                              .format(DateTime.now())
+                                        ],
+                                      )
+                                    : sprintf(
+                                        TaskConstants.MODAL_SHEET_TO_TIME,
+                                        [
+                                          DateFormat('hh:mm a')
+                                              .format(_selectedToTime)
+                                        ],
+                                      ),
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.black,
@@ -293,7 +316,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                           height: 30,
                         ),
                         title: Text(
-                          'Remind Me',
+                          TaskConstants.REMIND_ME,
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -330,39 +353,33 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                                     setState(() {
                                       if (_selectedFromTime == null) {
                                         Fluttertoast.showToast(
-                                            msg:
-                                                'Please select start time first!');
+                                          msg: TaskConstants
+                                              .PLEASE_SELECT_START_TIME_FIRST,
+                                        );
                                         return;
                                       }
-                                      if (index == 0 &&
-                                          _selectedFromTime
-                                                      .millisecondsSinceEpoch -
-                                                  DateTime.now()
-                                                      .millisecondsSinceEpoch <=
-                                              300000) {
+                                      if ((index == 0 &&
+                                              _selectedFromTime
+                                                          .millisecondsSinceEpoch -
+                                                      DateTime.now()
+                                                          .millisecondsSinceEpoch <=
+                                                  300000) ||
+                                          (index == 1 &&
+                                              _selectedFromTime
+                                                          .millisecondsSinceEpoch -
+                                                      DateTime.now()
+                                                          .millisecondsSinceEpoch <=
+                                                  1800000) ||
+                                          (index == 2 &&
+                                              _selectedFromTime
+                                                          .millisecondsSinceEpoch -
+                                                      DateTime.now()
+                                                          .millisecondsSinceEpoch <=
+                                                  3600000)) {
                                         Fluttertoast.showToast(
-                                            msg:
-                                                'Please select valid start time.1');
-                                        return;
-                                      } else if (index == 1 &&
-                                          _selectedFromTime
-                                                      .millisecondsSinceEpoch -
-                                                  DateTime.now()
-                                                      .millisecondsSinceEpoch <=
-                                              1800000) {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                'Please select valid start time.2');
-                                        return;
-                                      } else if (index == 2 &&
-                                          _selectedFromTime
-                                                      .millisecondsSinceEpoch -
-                                                  DateTime.now()
-                                                      .millisecondsSinceEpoch <=
-                                              3600000) {
-                                        Fluttertoast.showToast(
-                                            msg:
-                                                'Please select valid start time3.');
+                                          msg: TaskConstants
+                                              .PLEASE_SELECT_VALID_START_TIME,
+                                        );
                                         return;
                                       }
                                       _defaultChoiceIndex =
@@ -435,7 +452,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                           height: 30,
                         ),
                         title: Text(
-                          'Priority',
+                          TaskConstants.PRIORITY,
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -493,12 +510,16 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                             bool status = false;
                             if (_controller.text.trim().isEmpty) {
                               Fluttertoast.showToast(
-                                  msg: 'Please enter a Title!');
+                                msg: TaskConstants.PLEASE_ENTER_A_TITLE,
+                              );
                               return;
                             }
+                            // add logic of Time-Slot already added. Currently not working
+                            // also check for test case where only title is added and nothing else
                             if (status == true) {
                               Fluttertoast.showToast(
-                                  msg: 'Time Slot already added!');
+                                msg: TaskConstants.TIME_SLOT_ALREADY_ADDED,
+                              );
                             } else {
                               var task = Task(
                                 date: widget.model
@@ -525,15 +546,46 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                                   id: id,
                                   title: task.priority != null &&
                                           task.priority != 0
-                                      ? 'Reminder: Priority ${getPriorityString(task.priority)}'
-                                      : 'Reminder',
+                                      ? sprintf(
+                                          NotificationConstants
+                                              .PUSH_NOTIFICATION_TITLE,
+                                          [getPriorityString(task.priority)])
+                                      : TaskConstants.REMINDER,
                                   body: task.toTime == null || task.toTime == 0
-                                      ? 'Todo: ${task.title} at ${DateFormat("hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(task.fromTime))}'
-                                      : 'Todo: ${task.title} from ${DateFormat("hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(task.fromTime))} to ${DateFormat("hh:mm a").format(DateTime.fromMillisecondsSinceEpoch(task.toTime))}',
+                                      ? sprintf(
+                                          NotificationConstants
+                                              .PUSH_NOTIFICATION_BODY_WITH_ONLY_FROM_TIME,
+                                          [
+                                            task.title,
+                                            DateFormat('hh:mm a').format(
+                                              DateTime
+                                                  .fromMillisecondsSinceEpoch(
+                                                      task.fromTime),
+                                            )
+                                          ],
+                                        )
+                                      : sprintf(
+                                          NotificationConstants
+                                              .PUSH_NOTIFICATION_BODY_WITH_BOTH_FROM_TIME_AND_TO_TIME,
+                                          [
+                                            task.title,
+                                            DateFormat('hh:mm a').format(
+                                              DateTime
+                                                  .fromMillisecondsSinceEpoch(
+                                                      task.fromTime),
+                                            ),
+                                            DateFormat('hh:mm a').format(
+                                              DateTime
+                                                  .fromMillisecondsSinceEpoch(
+                                                      task.toTime),
+                                            ),
+                                          ],
+                                        ),
                                   payload: jsonEncode({
-                                    'type': 'reminder',
-                                    'id': task.id,
-                                    'fromTime': task.fromTime -
+                                    DatabaseConstants.ID: task.id,
+                                    NotificationConstants.NOTIFICATION_TYPE:
+                                        DatabaseConstants.FROM_TIME,
+                                    DatabaseConstants.FROM_TIME: task.fromTime -
                                         getReminderMilliseconds(
                                           _defaultChoiceIndex,
                                         ),
@@ -547,7 +599,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                           },
                           color: Theme.of(context).primaryColor,
                           child: Text(
-                            'SAVE',
+                            GeneralConstants.SAVE,
                             style: TextStyle(
                               letterSpacing: 1.5,
                               color: Colors.white,

@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/login_view.dart';
 import 'package:PlanIt/services/navigation_service.dart';
 import 'package:PlanIt/services/local_storage_service.dart';
@@ -21,23 +22,28 @@ class FirebaseAuthenticationService {
     @required String confirmPassword,
   }) async {
     if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      Fluttertoast.showToast(msg: 'Please fill up all the fields.');
+      Fluttertoast.showToast(msg: AuthConstants.PLEASE_FILL_ALL_THE_DETAILS);
 
       return false;
     }
     if (!EmailValidator.validate(email)) {
-      Fluttertoast.showToast(msg: 'Please enter a valid email address.');
+      Fluttertoast.showToast(
+        msg: AuthConstants.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS,
+      );
 
       return false;
     }
     if (password != confirmPassword) {
-      Fluttertoast.showToast(msg: 'Passwords do not match.');
+      Fluttertoast.showToast(
+        msg: AuthConstants.PASSWORD_DO_NOT_MATCH,
+      );
 
       return false;
     }
     if (password.length < 6) {
       Fluttertoast.showToast(
-          msg: 'Password must be atleast 6 characters long.');
+        msg: AuthConstants.PASSWORD_LENGTH_ATLEAST_SIX_CHARACTERS,
+      );
       return false;
     }
     try {
@@ -48,7 +54,7 @@ class FirebaseAuthenticationService {
       if (authResult.user != null) {
         sendVerificationMail();
         if (!authResult.user.emailVerified) {
-          return 'Not Verified';
+          return AuthConstants.NOT_VERIFIED;
         } else {
           _localStorageService.isLoggedIn = true;
           return true;
@@ -56,14 +62,14 @@ class FirebaseAuthenticationService {
       }
     } catch (e) {
       switch (e.message) {
-        case 'ERROR_EMAIL_ALREADY_IN_USE':
+        case AuthConstants.ERROR_EMAIL_ALREADY_IN_USE:
           Fluttertoast.showToast(
-            msg: 'This email is linked to an existing account',
+            msg: AuthConstants.EMAIL_ALREADY_LINKED_TO_ACCOUNT,
           );
           break;
         default:
           Fluttertoast.showToast(
-            msg: 'Registration Problem!',
+            msg: AuthConstants.REGISTRATION_PROBLEM,
           );
       }
       return;
@@ -76,7 +82,7 @@ class FirebaseAuthenticationService {
   }) async {
     if (email.isEmpty || password.isEmpty) {
       Fluttertoast.showToast(
-        msg: 'Please fill up all the fields.',
+        msg: AuthConstants.PLEASE_FILL_ALL_THE_DETAILS,
       );
       return false;
     }
@@ -107,17 +113,21 @@ class FirebaseAuthenticationService {
 
   void sendPasswordResetEmail(String email) {
     if (email.isEmpty) {
-      Fluttertoast.showToast(msg: "Please enter your Email Address!");
+      Fluttertoast.showToast(
+        msg: AuthConstants.PLEASE_ENTER_YOUR_EMAIL_ADDRESS,
+      );
       return;
     }
     if (!EmailValidator.validate(email)) {
-      Fluttertoast.showToast(msg: "Please enter a valid Email Address!");
+      Fluttertoast.showToast(
+        msg: AuthConstants.PLEASE_ENTER_A_VALID_EMAIL_ADDRESS,
+      );
       return;
     }
     try {
       _auth.sendPasswordResetEmail(email: email);
       Fluttertoast.showToast(
-        msg: "Password reset mail sent!",
+        msg: AuthConstants.PASSWORD_RESET_MAIL_SENT,
         backgroundColor: Colors.green,
         textColor: Colors.white,
         toastLength: Toast.LENGTH_LONG,
@@ -127,7 +137,7 @@ class FirebaseAuthenticationService {
       );
     } catch (e) {
       Fluttertoast.showToast(
-        msg: "Error sending mail! Please try later",
+        msg: AuthConstants.ERROR_SENDING_MAIL_PLEASE_TRY_LATER,
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );
@@ -138,10 +148,10 @@ class FirebaseAuthenticationService {
     try {
       var user = _auth.currentUser;
       await user.sendEmailVerification();
-      Fluttertoast.showToast(msg: 'Email sent!');
+      Fluttertoast.showToast(msg: AuthConstants.EMAIL_SENT);
     } catch (e) {
       Fluttertoast.showToast(
-        msg: 'Error sending email! Try later!',
+        msg: AuthConstants.ERROR_SENDING_MAIL_PLEASE_TRY_LATER,
         backgroundColor: Colors.red,
         textColor: Colors.white,
       );

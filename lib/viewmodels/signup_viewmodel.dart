@@ -1,10 +1,11 @@
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/enums/viewstate.dart';
-import 'package:PlanIt/services/firebase_authentication_service.dart';
-import 'package:PlanIt/services/navigation_service.dart';
 import 'package:PlanIt/ui/views/home_view.dart';
-import 'package:PlanIt/ui/views/verification_view.dart';
 import 'package:PlanIt/viewmodels/base_viewmodel.dart';
+import 'package:PlanIt/ui/views/verification_view.dart';
+import 'package:PlanIt/services/navigation_service.dart';
+import 'package:PlanIt/services/firebase_authentication_service.dart';
 
 class SignUpViewModel extends BaseViewModel {
   final _firebaseAuthenticationService =
@@ -25,7 +26,7 @@ class SignUpViewModel extends BaseViewModel {
       password: password,
       confirmPassword: confirmPassword,
     );
-    if (result == 'Not Verified') {
+    if (result == AuthConstants.NOT_VERIFIED) {
       _navigationService.pushReplacementNamed(VerificationView.routeName);
       setState(ViewState.Error);
     } else if (result == true) {

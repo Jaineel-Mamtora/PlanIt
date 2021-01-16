@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/base_view.dart';
 import 'package:PlanIt/viewmodels/startup_viewmodel.dart';
 
@@ -21,7 +22,7 @@ class StartUpView extends StatelessWidget {
                 height: 75,
               ),
               Text(
-                'PlanIt',
+                APP_NAME,
                 style: TextStyle(
                   fontSize: 40,
                   color: Colors.black,

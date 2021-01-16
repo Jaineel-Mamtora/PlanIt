@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/base_view.dart';
 import 'package:PlanIt/ui/views/login_view.dart';
 import 'package:PlanIt/viewmodels/signup_viewmodel.dart';
@@ -90,7 +91,7 @@ class _SignUpViewState extends State<SignUpView> {
                                         bottom: 20,
                                       ),
                                       child: Text(
-                                        'SIGN UP',
+                                        AuthConstants.SIGN_UP,
                                         style: TextStyle(
                                           fontSize: 30,
                                           letterSpacing: 1.5,
@@ -105,7 +106,7 @@ class _SignUpViewState extends State<SignUpView> {
                                       ),
                                       child: CustomTextField(
                                         controller: _emailController,
-                                        labelText: 'Email',
+                                        labelText: AuthConstants.EMAIL,
                                       ),
                                     ),
                                     Padding(
@@ -116,7 +117,7 @@ class _SignUpViewState extends State<SignUpView> {
                                       ),
                                       child: CustomTextField(
                                         controller: _passwordController,
-                                        labelText: 'Password',
+                                        labelText: AuthConstants.PASSWORD,
                                         obscureText: true,
                                         customMaxLines: 1,
                                       ),
@@ -129,7 +130,8 @@ class _SignUpViewState extends State<SignUpView> {
                                       ),
                                       child: CustomTextField(
                                         controller: _confirmPasswordController,
-                                        labelText: 'Confirm Password',
+                                        labelText:
+                                            AuthConstants.CONFIRM_PASSWORD,
                                         obscureText: true,
                                         customMaxLines: 1,
                                       ),
@@ -177,7 +179,7 @@ class _SignUpViewState extends State<SignUpView> {
                                               FocusScope.of(context).unfocus();
                                             },
                                             child: Text(
-                                              'SIGN UP',
+                                              AuthConstants.SIGN_UP,
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 color: Theme.of(context)
@@ -209,7 +211,7 @@ class _SignUpViewState extends State<SignUpView> {
                                             ),
                                           ),
                                           Text(
-                                            'OR',
+                                            AuthConstants.OR,
                                             style: TextStyle(
                                               fontSize: 13,
                                             ),
@@ -263,7 +265,7 @@ class _SignUpViewState extends State<SignUpView> {
                                               ),
                                             ),
                                             label: Text(
-                                              'Sign in with Google',
+                                              AuthConstants.SIGN_IN_WITH_GOOGLE,
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 20,
@@ -284,7 +286,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: <Widget>[
                                   Text(
-                                    'Already have an account?',
+                                    AuthConstants.ALREADY_HAVE_AN_ACCOUNT,
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,
@@ -298,7 +300,7 @@ class _SignUpViewState extends State<SignUpView> {
                                       );
                                     },
                                     child: Text(
-                                      'LOG IN',
+                                      AuthConstants.LOG_IN,
                                       style: TextStyle(
                                         fontSize: 16,
                                         color:

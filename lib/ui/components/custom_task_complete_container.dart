@@ -1,3 +1,4 @@
+import 'package:PlanIt/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -41,14 +42,14 @@ class CustomTaskCompleteContainer extends StatelessWidget {
           context: context,
           builder: (ctx) => AlertDialog(
             title: Text(
-              'Are you sure?',
+              TaskConstants.ARE_YOU_SURE,
               style: TextStyle(
                 fontSize: 16,
                 color: Theme.of(context).primaryColorDark,
               ),
             ),
             content: Text(
-              'Do you want to remove the completed Task?',
+              TaskConstants.DO_YOU_WANT_TO_REMOVE_COMPLETED_TASK,
               style: TextStyle(
                 fontSize: 14,
                 color: Theme.of(context).primaryColorDark,
@@ -56,16 +57,16 @@ class CustomTaskCompleteContainer extends StatelessWidget {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('NO'),
+                child: Text(GeneralConstants.NO),
                 onPressed: () {
                   Navigator.of(ctx).pop(false);
                 },
               ),
               FlatButton(
-                child: Text('YES'),
+                child: Text(GeneralConstants.YES),
                 onPressed: () async {
                   Fluttertoast.showToast(
-                    msg: 'Task deleted successfully!',
+                    msg: TaskConstants.TASK_DELETED_SUCESSFULLY,
                     backgroundColor: GREEN,
                     textColor: Colors.white,
                   );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import 'package:PlanIt/colors.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/viewmodels/home_viewmodel.dart';
 
 class CustomTableCalendar extends StatefulWidget {
@@ -40,7 +41,7 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
       initialSelectedDay: widget.model.getSelectedDate(),
       initialCalendarFormat: CalendarFormat.week,
       availableCalendarFormats: {
-        CalendarFormat.week: 'Week',
+        CalendarFormat.week: CalendarConstants.WEEK,
       },
       calendarController: _controller,
       headerVisible: false,
@@ -82,7 +83,7 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Text(
-                  '${date.day.toString()}',
+                  date.day.toString(),
                   style: TextStyle(
                     fontSize: 20,
                     color: Theme.of(context).primaryColor,
@@ -96,7 +97,7 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
           return Container(
             alignment: Alignment.center,
             child: Text(
-              '${date.day.toString()}',
+              date.day.toString(),
               style: TextStyle(
                 fontSize: 16,
                 color: Theme.of(context).primaryColor,

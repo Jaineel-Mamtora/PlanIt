@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/home_view.dart';
 import 'package:PlanIt/enums/notification_type.dart';
 import 'package:PlanIt/services/navigation_service.dart';
@@ -14,15 +15,18 @@ class NotificationManager {
 
   Future onNotificationClick() async {
     // if (_localStorageService.isLoggedIn) {
-    int id = message['id'];
-    int fromTime = message['fromTime'];
-    NotificationType type = notificationTypes.map[message['type'].toString()];
+    int id = message[DatabaseConstants.ID];
+    int fromTime = message[DatabaseConstants.FROM_TIME];
+    NotificationType type = notificationTypes
+        .map[message[NotificationConstants.NOTIFICATION_TYPE].toString()];
     switch (type) {
       case NotificationType.REMINDER:
         await navigateTaskDetails(id, fromTime);
         break;
       default:
-        Fluttertoast.showToast(msg: 'Notification Click Error');
+        Fluttertoast.showToast(
+          msg: NotificationConstants.NOTIFICATION_CLICK_ERROR,
+        );
         break;
     }
     // } else {

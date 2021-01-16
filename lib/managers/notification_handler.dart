@@ -9,6 +9,7 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/models/recieve_notification.dart';
 import 'package:PlanIt/managers/notification_manager.dart';
 
@@ -20,7 +21,7 @@ class NotificationHandler {
 
   Future<void> initLocalNotification() async {
     tz.initializeTimeZones();
-    tz.setLocalLocation(tz.getLocation('America/Detroit'));
+    tz.setLocalLocation(tz.getLocation(NotificationConstants.DEFAULT_LOCATION));
     if (Platform.isIOS) {
       requestIOSPermission();
     }
@@ -74,9 +75,7 @@ class NotificationHandler {
     });
   }
 
-  void onNotificationReceive(ReceiveNotification notification) {
-    print('Notification Received: ${notification.id}');
-  }
+  void onNotificationReceive(ReceiveNotification notification) {}
 
   static Future<String> _downloadAndSaveFile(
       String url, String fileName) async {
@@ -109,8 +108,8 @@ class NotificationHandler {
       htmlFormatSummaryText: true,
     );
     var androidChannel = AndroidNotificationDetails(
-      'com.trailblazing.planit',
-      'PlanIt',
+      PACKAGE_ID,
+      APP_NAME,
       'Channel description',
       playSound: true,
       enableVibration: true,
@@ -129,7 +128,10 @@ class NotificationHandler {
       id,
       title,
       body,
-      tz.TZDateTime.fromMillisecondsSinceEpoch(tz.local, data['date']),
+      tz.TZDateTime.fromMillisecondsSinceEpoch(
+        tz.local,
+        data[DatabaseConstants.FROM_TIME],
+      ),
       platformChannel,
       payload: payload,
       androidAllowWhileIdle: true,
@@ -147,15 +149,11 @@ class NotificationHandler {
     Map<String, dynamic> data = jsonDecode(payload);
     final bigTextStyleInformation = BigTextStyleInformation(
       body,
-      // htmlFormatBigText: true,
       contentTitle: title,
-      // htmlFormatContentTitle: true,
-      // summaryText: body,
-      // htmlFormatSummaryText: true,
     );
     var androidChannel = AndroidNotificationDetails(
-      'com.trailblazing.planit',
-      'PlanIt',
+      PACKAGE_ID,
+      APP_NAME,
       'Channel description',
       playSound: true,
       enableVibration: true,
@@ -176,7 +174,7 @@ class NotificationHandler {
       body,
       tz.TZDateTime.fromMillisecondsSinceEpoch(
         tz.local,
-        data['fromTime'],
+        data[DatabaseConstants.FROM_TIME],
       ),
       platformChannel,
       payload: payload,
