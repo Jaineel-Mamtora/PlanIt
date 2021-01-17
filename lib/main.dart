@@ -31,9 +31,20 @@ void main() async {
 
 class MyPlanItApp extends StatelessWidget {
   final _navigationService = locator<NavigationService>();
-
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle.dark.copyWith(
+        /* set Status bar color in Android devices. */
+        statusBarColor: Colors.white,
+        /* set Status bar icons color in Android devices.*/
+        statusBarIconBrightness: Brightness.dark,
+        /* set Status bar icon color in iOS. */
+        statusBarBrightness: Brightness.dark,
+        systemNavigationBarColor: Colors.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
     return MultiProvider(
       providers: [
         StreamProvider<User>.value(

@@ -1,13 +1,14 @@
 import 'dart:convert';
 
-import 'package:PlanIt/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:PlanIt/colors.dart';
 import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/models/task.dart';
 import 'package:PlanIt/enums/status.dart';
 import 'package:PlanIt/enums/reminder.dart';
@@ -16,7 +17,6 @@ import 'package:PlanIt/viewmodels/home_viewmodel.dart';
 import 'package:PlanIt/services/database_service.dart';
 import 'package:PlanIt/managers/notification_handler.dart';
 import 'package:PlanIt/ui/components/custom_text_field.dart';
-import 'package:sprintf/sprintf.dart';
 
 class CustomModalBottomSheet extends StatefulWidget {
   final DateTime date;
@@ -153,7 +153,10 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
     final mediaQuery = MediaQuery.of(context);
     final Size deviceSize = mediaQuery.size;
     return Container(
-      height: deviceSize.height * 0.75 + mediaQuery.viewInsets.bottom,
+      margin: EdgeInsets.only(
+        top: mediaQuery.padding.top + 35,
+      ),
+      height: deviceSize.height * 0.67 + mediaQuery.viewInsets.bottom,
       padding: EdgeInsets.only(
         bottom: mediaQuery.viewInsets.bottom,
       ),
@@ -165,6 +168,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
         ),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Container(
             margin: EdgeInsets.symmetric(
@@ -183,14 +187,14 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
                 return false;
               },
               child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    SizedBox(
-                      height: 10,
-                    ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
                       ),
                       child: CustomTextField(
                         labelText: TaskConstants.TITLE,

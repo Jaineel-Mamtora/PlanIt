@@ -1,9 +1,9 @@
-import 'package:PlanIt/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:PlanIt/colors.dart';
+import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/base_view.dart';
 import 'package:PlanIt/ui/components/custom_card.dart';
 import 'package:PlanIt/viewmodels/home_viewmodel.dart';
@@ -50,14 +50,12 @@ class _HomeViewState extends State<HomeView> {
             ),
           ),
           builder: (_) {
-            return SafeArea(
-              child: CustomModalBottomSheet(
-                date: model.getSelectedDate(),
-                model: model,
-                refreshKey: _currentIndex == 0
-                    ? _refreshIndicatorKey1
-                    : _refreshIndicatorKey2,
-              ),
+            return CustomModalBottomSheet(
+              date: model.getSelectedDate(),
+              model: model,
+              refreshKey: _currentIndex == 0
+                  ? _refreshIndicatorKey1
+                  : _refreshIndicatorKey2,
             );
           },
         ) ??
@@ -85,6 +83,7 @@ class _HomeViewState extends State<HomeView> {
           length: 2,
           child: Scaffold(
             appBar: AppBar(
+              brightness: Brightness.light,
               backgroundColor: Colors.white,
               elevation: 2,
               title: Text(
@@ -371,34 +370,32 @@ class _HomeViewState extends State<HomeView> {
               padding: const EdgeInsets.symmetric(
                 horizontal: 20,
               ),
-              child: SafeArea(
-                child: InkWell(
-                  onTap: () => _addPlanBottomSheet(
-                    ctx: context,
-                    model: model,
-                  ),
-                  child: Material(
-                    elevation: 5,
-                    borderRadius: BorderRadius.circular(5.0),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      height: 50,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        borderRadius: BorderRadius.circular(5.0),
+              child: InkWell(
+                onTap: () => _addPlanBottomSheet(
+                  ctx: context,
+                  model: model,
+                ),
+                child: Material(
+                  elevation: 5,
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    height: 50,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Theme.of(context).primaryColor,
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          TaskConstants.WHAT_DO_YOU_NEED_TO_DO,
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: GREY,
-                          ),
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        TaskConstants.WHAT_DO_YOU_NEED_TO_DO,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: GREY,
                         ),
                       ),
                     ),
