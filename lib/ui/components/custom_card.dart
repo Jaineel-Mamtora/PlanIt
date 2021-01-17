@@ -13,11 +13,13 @@ import 'package:PlanIt/managers/notification_handler.dart';
 
 class CustomCard extends StatelessWidget {
   final _databaseService = locator<DatabaseService>();
+  final int index;
   final Task taskEntity;
   final GlobalKey<RefreshIndicatorState> refreshKey;
 
   CustomCard({
     Key key,
+    this.index,
     this.taskEntity,
     this.refreshKey,
   }) : super(key: key);
@@ -152,95 +154,85 @@ class CustomCard extends StatelessWidget {
             .cancel(taskEntity.id);
         await refreshKey.currentState.show();
       },
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 10,
-          right: 10,
-        ),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
+      child: ListTile(
+        tileColor: (index % 2 == 0)
+            ? Color.fromRGBO(151, 151, 151, 0.08)
+            : Colors.white,
+        leading: GestureDetector(
+          onTap: () => markAsCompleteComfirmationDialog(context: context),
+          child: SvgPicture.asset(
+            'assets/icons/check_circle.svg',
+            height: 40,
+            width: 40,
           ),
-          margin: const EdgeInsets.all(0),
-          elevation: 2,
-          child: ListTile(
-            leading: GestureDetector(
-              onTap: () => markAsCompleteComfirmationDialog(context: context),
-              child: SvgPicture.asset(
-                'assets/icons/check_circle.svg',
-                height: 45,
-                width: 45,
-              ),
-            ),
-            title: Text(
-              taskEntity.title,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
+        ),
+        title: Text(
+          taskEntity.title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        subtitle: Row(
+          children: <Widget>[
+            Text(
+              DateFormat('hh:mm a').format(
+                  DateTime.fromMillisecondsSinceEpoch(taskEntity.fromTime)),
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 14,
               ),
             ),
-            subtitle: Row(
-              children: <Widget>[
-                Text(
-                  DateFormat('hh:mm a').format(
-                      DateTime.fromMillisecondsSinceEpoch(taskEntity.fromTime)),
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                taskEntity.toTime != null && taskEntity.toTime != 0
-                    ? Text(
-                        sprintf(
-                          TaskConstants.CUSTOM_CARD_TO_TIME,
-                          [
-                            DateFormat('hh:mm a').format(
-                              DateTime.fromMillisecondsSinceEpoch(
-                                taskEntity.toTime,
-                              ),
+            taskEntity.toTime != null && taskEntity.toTime != 0
+                ? Text(
+                    sprintf(
+                      TaskConstants.CUSTOM_CARD_TO_TIME,
+                      [
+                        DateFormat('hh:mm a').format(
+                          DateTime.fromMillisecondsSinceEpoch(
+                            taskEntity.toTime,
+                          ),
+                        ),
+                      ],
+                    ),
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  )
+                : Container(width: 0, height: 0),
+          ],
+        ),
+        trailing: taskEntity.priority == 0 && taskEntity.reminder == -1
+            ? Container(width: 0)
+            : taskEntity.priority != 0 && taskEntity.reminder == -1
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: SvgPicture.asset(
+                      getReminderSVG(taskEntity.priority),
+                      height: 12,
+                    ),
+                  )
+                : taskEntity.priority == 0 && taskEntity.reminder != -1
+                    ? SvgPicture.asset(
+                        'assets/icons/bell_notification.svg',
+                        width: 26,
+                      )
+                    : Container(
+                        width: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SvgPicture.asset(
+                              getReminderSVG(taskEntity.priority),
+                              height: 12,
                             ),
+                            SvgPicture.asset(
+                              'assets/icons/bell_notification.svg',
+                              width: 26,
+                            )
                           ],
                         ),
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      )
-                    : Container(width: 0, height: 0),
-              ],
-            ),
-            trailing: taskEntity.priority == 0 && taskEntity.reminder == -1
-                ? Container(width: 0)
-                : taskEntity.priority != 0 && taskEntity.reminder == -1
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: SvgPicture.asset(
-                          getReminderSVG(taskEntity.priority),
-                          height: 12,
-                        ),
-                      )
-                    : taskEntity.priority == 0 && taskEntity.reminder != -1
-                        ? SvgPicture.asset(
-                            'assets/icons/bell_notification.svg',
-                            width: 26,
-                          )
-                        : Container(
-                            width: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                SvgPicture.asset(
-                                  getReminderSVG(taskEntity.priority),
-                                  height: 12,
-                                ),
-                                SvgPicture.asset(
-                                  'assets/icons/bell_notification.svg',
-                                  width: 26,
-                                )
-                              ],
-                            ),
-                          ),
-          ),
-        ),
+                      ),
       ),
     );
   }

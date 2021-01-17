@@ -33,91 +33,84 @@ class MyPlanItApp extends StatelessWidget {
   final _navigationService = locator<NavigationService>();
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.dark.copyWith(
-        /* set Status bar color in Android devices. */
-        statusBarColor: Colors.white,
-        /* set Status bar icons color in Android devices.*/
-        statusBarIconBrightness: Brightness.dark,
-        /* set Status bar icon color in iOS. */
-        statusBarBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
       ),
-    );
-    return MultiProvider(
-      providers: [
-        StreamProvider<User>.value(
-          value: FirebaseAuth.instance.userChanges(),
-        ),
-      ],
-      child: GestureDetector(
-        onTap: () {
-          FocusScopeNode currentFocus = FocusScope.of(context);
-
-          if (!currentFocus.hasPrimaryFocus &&
-              currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus.unfocus();
-          }
-        },
-        child: MaterialApp(
-          title: APP_NAME,
-          debugShowCheckedModeBanner: false,
-          navigatorKey: _navigationService.navigatorKey,
-          onGenerateRoute: CustomRouter.generateRoute,
-          theme: ThemeData(
-            textTheme: TextTheme(
-              caption: TextStyle(
-                fontSize: 24,
-                color: Color(0xFF072F5F),
-              ),
-              headline1: TextStyle(
-                fontSize: 18,
-                color: Color(0xFF072F5F),
-              ),
-              headline2: TextStyle(
-                fontSize: 14,
-                color: Color(0xFF222222),
-              ),
-              subtitle1: TextStyle(
-                fontSize: 12,
-                color: Color(0xFF6C8389),
-              ),
-              subtitle2: TextStyle(
-                fontSize: 12,
-                color: Color(0xFFC2CFE1),
-              ),
-              headline3: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF0080FF),
-              ),
-              headline4: TextStyle(
-                fontSize: 16,
-                color: Color(0xFF072F5F),
-              ),
-              headline5: TextStyle(
-                fontSize: 14,
-                color: Color(0xFF6A707E),
-              ),
-              headline6: TextStyle(
-                fontSize: 10,
-                color: Color(0xFF072F5F),
-              ),
-            ),
-            primarySwatch: generateMaterialColor(Color(0xFF0080FF)),
-            fontFamily: FONT_NAME,
-            scaffoldBackgroundColor: Colors.white,
-            cursorColor: Color(0xFF072F5F),
-            highlightColor: Color(0xFFC2CFE1),
-            accentColor: Color(0xFFE69518),
-            unselectedWidgetColor: Color(0xFFC4C4C4),
-            focusColor: Color(0xFF072F5F),
-            indicatorColor: Color(0xFF90A0B8),
-            primaryColorDark: Color(0xFF072F5F),
-            toggleableActiveColor: Color(0xFF90A0B8),
+      child: MultiProvider(
+        providers: [
+          StreamProvider<User>.value(
+            value: FirebaseAuth.instance.userChanges(),
           ),
-          home: StartUpView(),
+        ],
+        child: GestureDetector(
+          onTap: () {
+            FocusScopeNode currentFocus = FocusScope.of(context);
+
+            if (!currentFocus.hasPrimaryFocus &&
+                currentFocus.focusedChild != null) {
+              FocusManager.instance.primaryFocus.unfocus();
+            }
+          },
+          child: MaterialApp(
+            title: APP_NAME,
+            debugShowCheckedModeBanner: false,
+            navigatorKey: _navigationService.navigatorKey,
+            onGenerateRoute: CustomRouter.generateRoute,
+            theme: ThemeData(
+              textTheme: TextTheme(
+                caption: TextStyle(
+                  fontSize: 24,
+                  color: Color(0xFF072F5F),
+                ),
+                headline1: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF072F5F),
+                ),
+                headline2: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF222222),
+                ),
+                subtitle1: TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFF6C8389),
+                ),
+                subtitle2: TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFFC2CFE1),
+                ),
+                headline3: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF0080FF),
+                ),
+                headline4: TextStyle(
+                  fontSize: 16,
+                  color: Color(0xFF072F5F),
+                ),
+                headline5: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF6A707E),
+                ),
+                headline6: TextStyle(
+                  fontSize: 10,
+                  color: Color(0xFF072F5F),
+                ),
+              ),
+              primarySwatch: generateMaterialColor(Color(0xFF0080FF)),
+              fontFamily: FONT_NAME,
+              scaffoldBackgroundColor: Colors.white,
+              cursorColor: Color(0xFF072F5F),
+              highlightColor: Color(0xFFC2CFE1),
+              accentColor: Color(0xFFE69518),
+              unselectedWidgetColor: Color(0xFFC4C4C4),
+              focusColor: Color(0xFF072F5F),
+              indicatorColor: Color(0xFF90A0B8),
+              primaryColorDark: Color(0xFF072F5F),
+              toggleableActiveColor: Color(0xFF90A0B8),
+            ),
+            home: StartUpView(),
+          ),
         ),
       ),
     );

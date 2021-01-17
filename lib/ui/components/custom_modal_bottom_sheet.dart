@@ -19,12 +19,10 @@ import 'package:PlanIt/managers/notification_handler.dart';
 import 'package:PlanIt/ui/components/custom_text_field.dart';
 
 class CustomModalBottomSheet extends StatefulWidget {
-  final DateTime date;
   final HomeViewModel model;
   final GlobalKey<RefreshIndicatorState> refreshKey;
 
   CustomModalBottomSheet({
-    this.date,
     this.model,
     this.refreshKey,
   });

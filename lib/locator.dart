@@ -12,6 +12,7 @@ import 'package:PlanIt/viewmodels/home_viewmodel.dart';
 import 'package:PlanIt/viewmodels/login_viewmodel.dart';
 import 'package:PlanIt/viewmodels/signup_viewmodel.dart';
 import 'package:PlanIt/viewmodels/startup_viewmodel.dart';
+import 'package:PlanIt/viewmodels/create_task_viewmodel.dart';
 import 'package:PlanIt/viewmodels/verification_viewmodel.dart';
 
 GetIt locator = GetIt.instance;
@@ -33,4 +34,5 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => SignUpViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => VerificationViewModel());
+  locator.registerFactory(() => CreateTaskViewModel());
 }

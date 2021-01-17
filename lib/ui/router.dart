@@ -1,3 +1,4 @@
+import 'package:PlanIt/ui/views/create_task_view.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,8 @@ class CustomRouter {
         );
       case VerificationView.routeName:
         return MaterialPageRoute(builder: (_) => VerificationView());
+      case CreateTaskView.routeName:
+        return MaterialPageRoute(builder: (_) => CreateTaskView());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

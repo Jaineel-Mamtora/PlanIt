@@ -1,3 +1,5 @@
+import 'package:PlanIt/locator.dart';
+import 'package:PlanIt/services/navigation_service.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,8 +9,8 @@ import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/base_view.dart';
 import 'package:PlanIt/ui/components/custom_card.dart';
 import 'package:PlanIt/viewmodels/home_viewmodel.dart';
+import 'package:PlanIt/ui/views/create_task_view.dart';
 import 'package:PlanIt/ui/components/custom_table_calendar.dart';
-import 'package:PlanIt/ui/components/custom_modal_bottom_sheet.dart';
 import 'package:PlanIt/ui/components/custom_task_complete_container.dart';
 
 class HomeView extends StatefulWidget {
@@ -29,45 +31,11 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _navigationService = locator<NavigationService>();
   final _refreshIndicatorKey1 = GlobalKey<RefreshIndicatorState>();
   final _refreshIndicatorKey2 = GlobalKey<RefreshIndicatorState>();
   var _currentIndex = 0;
-
   DateTime selectedDate;
-
-  Future _addPlanBottomSheet({
-    BuildContext ctx,
-    HomeViewModel model,
-  }) async {
-    var result = await showModalBottomSheet(
-          context: ctx,
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.only(
-              topLeft: const Radius.circular(30.0),
-              topRight: const Radius.circular(30.0),
-            ),
-          ),
-          builder: (_) {
-            return CustomModalBottomSheet(
-              date: model.getSelectedDate(),
-              model: model,
-              refreshKey: _currentIndex == 0
-                  ? _refreshIndicatorKey1
-                  : _refreshIndicatorKey2,
-            );
-          },
-        ) ??
-        false;
-    if (result == true) {
-      if (_currentIndex == 0) {
-        await _refreshIndicatorKey1.currentState.show();
-      } else {
-        await _refreshIndicatorKey2.currentState.show();
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -269,24 +237,19 @@ class _HomeViewState extends State<HomeView> {
                           )
                         : ListView.builder(
                             padding: const EdgeInsets.only(
-                              top: 16,
-                              bottom: 16,
+                              bottom: 70,
                             ),
                             itemCount: model.pendingTasks.length,
                             itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  model.getSelectedDate() ==
-                                          DateTime.fromMillisecondsSinceEpoch(
-                                              model.pendingTasks[index].date)
-                                      ? CustomCard(
-                                          refreshKey: _refreshIndicatorKey1,
-                                          taskEntity: model.pendingTasks[index],
-                                        )
-                                      : Container(),
-                                  SizedBox(height: 15),
-                                ],
-                              );
+                              return model.getSelectedDate() ==
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                          model.pendingTasks[index].date)
+                                  ? CustomCard(
+                                      index: index,
+                                      refreshKey: _refreshIndicatorKey1,
+                                      taskEntity: model.pendingTasks[index],
+                                    )
+                                  : Container();
                             },
                           ),
                   ),
@@ -326,28 +289,22 @@ class _HomeViewState extends State<HomeView> {
                           )
                         : ListView.builder(
                             padding: const EdgeInsets.only(
-                              top: 16,
-                              bottom: 16,
+                              bottom: 70,
                             ),
                             itemCount: model.completedTasks.length,
                             itemBuilder: (context, index) {
                               if (model.completedTasks.isNotEmpty) {
-                                return Column(
-                                  children: [
-                                    model.getSelectedDate() ==
-                                            DateTime.fromMillisecondsSinceEpoch(
-                                                model
-                                                    .completedTasks[index].date)
-                                        ? CustomTaskCompleteContainer(
-                                            refreshKey: _refreshIndicatorKey2,
-                                            id: model.completedTasks[index].id,
-                                            title: model
-                                                .completedTasks[index].title,
-                                          )
-                                        : Container(),
-                                    SizedBox(height: 15),
-                                  ],
-                                );
+                                return model.getSelectedDate() ==
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                            model.completedTasks[index].date)
+                                    ? CustomTaskCompleteContainer(
+                                        index: index,
+                                        refreshKey: _refreshIndicatorKey2,
+                                        id: model.completedTasks[index].id,
+                                        title:
+                                            model.completedTasks[index].title,
+                                      )
+                                    : Container();
                               }
                               return Center(
                                 child: Padding(
@@ -371,10 +328,17 @@ class _HomeViewState extends State<HomeView> {
                 horizontal: 20,
               ),
               child: InkWell(
-                onTap: () => _addPlanBottomSheet(
-                  ctx: context,
-                  model: model,
-                ),
+                onTap: () async {
+                  dynamic result = await _navigationService
+                      .pushNamed(CreateTaskView.routeName);
+                  if (result == true) {
+                    if (_currentIndex == 0) {
+                      await _refreshIndicatorKey1.currentState.show();
+                    } else {
+                      await _refreshIndicatorKey2.currentState.show();
+                    }
+                  }
+                },
                 child: Material(
                   elevation: 5,
                   borderRadius: BorderRadius.circular(5.0),

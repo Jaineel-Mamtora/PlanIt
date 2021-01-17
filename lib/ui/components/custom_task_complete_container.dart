@@ -11,10 +11,12 @@ class CustomTaskCompleteContainer extends StatelessWidget {
   final _databaseService = locator<DatabaseService>();
   final int id;
   final String title;
+  final int index;
   final GlobalKey<RefreshIndicatorState> refreshKey;
 
   CustomTaskCompleteContainer({
     this.id,
+    this.index,
     this.title,
     this.refreshKey,
   });
@@ -81,47 +83,18 @@ class CustomTaskCompleteContainer extends StatelessWidget {
         await _databaseService.delete(id);
         await refreshKey.currentState.show();
       },
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 10,
-          right: 10,
+      child: ListTile(
+        leading: SvgPicture.asset(
+          'assets/icons/checkmark.svg',
+          width: 20,
+          height: 18,
         ),
-        child: Card(
-          elevation: 3,
-          margin: const EdgeInsets.all(0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Container(
-            height: 40,
-            decoration: BoxDecoration(
-              color: LIGHT_BLUE,
-              border: Border.all(
-                color: Theme.of(context).primaryColor,
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              children: <Widget>[
-                SizedBox(
-                  width: 30,
-                ),
-                SvgPicture.asset(
-                  'assets/icons/checkmark.svg',
-                  width: 20,
-                  height: 18,
-                ),
-                SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ],
-            ),
+        tileColor: (index % 2 == 0) ? LIGHT_BLUE : Colors.white,
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.black,
           ),
         ),
       ),
