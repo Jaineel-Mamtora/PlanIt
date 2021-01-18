@@ -5,15 +5,17 @@ import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/home_view.dart';
 import 'package:PlanIt/enums/notification_type.dart';
 import 'package:PlanIt/services/navigation_service.dart';
+import 'package:PlanIt/services/local_storage_service.dart';
 
 class NotificationManager {
   final Map<String, dynamic> message;
   final _navigationService = locator<NavigationService>();
-  // final _localStorageService = locator<LocalStorageService>();
+  final _localStorageService = locator<LocalStorageService>();
 
   NotificationManager({this.message});
 
   Future onNotificationClick() async {
+    _localStorageService.isNotificationClicked = true;
     // if (_localStorageService.isLoggedIn) {
     int id = message[DatabaseConstants.ID];
     int fromTime = message[DatabaseConstants.FROM_TIME];

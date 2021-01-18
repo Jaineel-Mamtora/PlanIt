@@ -6,14 +6,12 @@ import 'package:PlanIt/models/task.dart';
 import 'package:PlanIt/ui/utils/date.dart';
 import 'package:PlanIt/services/database_service.dart';
 import 'package:PlanIt/viewmodels/base_viewmodel.dart';
-import 'package:PlanIt/managers/notification_handler.dart';
 import 'package:PlanIt/services/local_storage_service.dart';
 import 'package:PlanIt/services/firebase_authentication_service.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _databaseService = locator<DatabaseService>();
   final _localStorageService = locator<LocalStorageService>();
-  final _notificationHandler = locator<NotificationHandler>();
   final _firebaseAuthenticationService =
       locator<FirebaseAuthenticationService>();
   int selectedDate = dateTimeToEpoch(DateTime.now());
@@ -21,8 +19,11 @@ class HomeViewModel extends BaseViewModel {
   var completedTasks = <Task>[];
 
   Future<void> onModelReady({int taskId, int fromTime}) async {
-    if (taskId != 0 && fromTime != 0) {
+    if (taskId != 0 &&
+        fromTime != 0 &&
+        _localStorageService.isNotificationClicked == true) {
       setSelectedDate(DateTime.fromMillisecondsSinceEpoch(fromTime));
+      _localStorageService.isNotificationClicked = false;
     }
     pendingTasks = await _databaseService
         .queryPendingTask(getSelectedDate().millisecondsSinceEpoch);
@@ -31,10 +32,6 @@ class HomeViewModel extends BaseViewModel {
     pendingTasks.sort((a, b) => a.fromTime.compareTo(b.fromTime));
     completedTasks.sort((a, b) => a.fromTime.compareTo(b.fromTime));
     notifyListeners();
-    if (_localStorageService.isNotificationClicked == true) {
-      await _notificationHandler.initLocalNotification();
-      _localStorageService.isNotificationClicked = false;
-    }
   }
 
   Future<DateTime> selectDate(
