@@ -106,6 +106,7 @@ class TaskConstants {
   static const String PENDING = 'Pending';
   static const String COMPLETED = 'Completed';
   static const String WHAT_DO_YOU_NEED_TO_DO = 'What do you need to do?';
+  static const String TASK_DETAILS = 'Task Details';
 }
 
 class CalendarConstants {

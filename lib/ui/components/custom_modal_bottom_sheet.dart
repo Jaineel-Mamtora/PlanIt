@@ -156,7 +156,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
       margin: EdgeInsets.only(
         top: mediaQuery.padding.top + 35,
       ),
-      height: deviceSize.height * 0.67 + mediaQuery.viewInsets.bottom,
+      height: deviceSize.height * 0.7 + mediaQuery.viewInsets.bottom,
       padding: EdgeInsets.only(
         bottom: mediaQuery.viewInsets.bottom,
       ),

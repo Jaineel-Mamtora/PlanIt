@@ -270,7 +270,7 @@ class _HomeViewState extends State<HomeView> {
                         : ListView.builder(
                             padding: const EdgeInsets.only(
                               top: 16,
-                              bottom: 16,
+                              bottom: 60,
                             ),
                             itemCount: model.pendingTasks.length,
                             itemBuilder: (context, index) {
@@ -327,7 +327,7 @@ class _HomeViewState extends State<HomeView> {
                         : ListView.builder(
                             padding: const EdgeInsets.only(
                               top: 16,
-                              bottom: 16,
+                              bottom: 60,
                             ),
                             itemCount: model.completedTasks.length,
                             itemBuilder: (context, index) {
@@ -380,7 +380,7 @@ class _HomeViewState extends State<HomeView> {
                   borderRadius: BorderRadius.circular(5.0),
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    height: 50,
+                    height: 45,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
