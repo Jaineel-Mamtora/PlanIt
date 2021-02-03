@@ -22,8 +22,9 @@ void main() async {
   await Firebase.initializeApp();
   final _notificationHandler = locator<NotificationHandler>();
   _notificationHandler.initLocalNotification();
-  _notificationHandler
-      .setOnNotificationReceive(_notificationHandler.onNotificationReceive);
+  _notificationHandler.setOnNotificationReceive(
+    _notificationHandler.onNotificationReceive,
+  );
   runApp(
     MyPlanItApp(),
   );

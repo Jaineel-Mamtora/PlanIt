@@ -116,6 +116,7 @@ class NotificationHandler {
       importance: Importance.max,
       priority: Priority.high,
       styleInformation: bigPictureStyleInformation,
+      color: Color(0xFF0080FF),
     );
     var iOSChannel = IOSNotificationDetails(
       attachments: [IOSNotificationAttachment(bigPicturePath)],
@@ -160,6 +161,7 @@ class NotificationHandler {
       importance: Importance.max,
       priority: Priority.high,
       styleInformation: bigTextStyleInformation,
+      color: Color(0xFF0080FF),
       largeIcon:
           DrawableResourceAndroidBitmap('@mipmap/notification_large_icon'),
     );

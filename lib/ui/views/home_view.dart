@@ -10,6 +10,8 @@ import 'package:PlanIt/viewmodels/home_viewmodel.dart';
 import 'package:PlanIt/ui/components/custom_table_calendar.dart';
 import 'package:PlanIt/ui/components/custom_modal_bottom_sheet.dart';
 import 'package:PlanIt/ui/components/custom_task_complete_container.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = '/home';
@@ -31,9 +33,22 @@ class _HomeViewState extends State<HomeView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _refreshIndicatorKey1 = GlobalKey<RefreshIndicatorState>();
   final _refreshIndicatorKey2 = GlobalKey<RefreshIndicatorState>();
+  CalendarController _calendarController;
   var _currentIndex = 0;
 
   DateTime selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _calendarController = CalendarController();
+  }
+
+  @override
+  void dispose() {
+    _calendarController.dispose();
+    super.dispose();
+  }
 
   Future _addPlanBottomSheet({
     BuildContext ctx,
@@ -69,6 +84,18 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  Future<DateTime> showMyDatePicker({
+    BuildContext ctx,
+    HomeViewModel model,
+  }) async {
+    return showDatePicker(
+      context: ctx,
+      initialDate: DateTime.fromMillisecondsSinceEpoch(model.selectedDate),
+      firstDate: DateTime(2015, 1, 1),
+      lastDate: DateTime(2050, 12, 31),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(
@@ -97,12 +124,17 @@ class _HomeViewState extends State<HomeView> {
                 child: Column(
                   children: [
                     CustomTableCalendar(
+                      controller: _calendarController,
                       model: model,
                       refreshKey: _currentIndex == 0
                           ? _refreshIndicatorKey1
                           : _refreshIndicatorKey2,
                     ),
                     TabBar(
+                      indicatorPadding: const EdgeInsets.all(0),
+                      labelColor: Theme.of(context).primaryColor,
+                      unselectedLabelColor: Colors.black,
+                      indicatorColor: Theme.of(context).primaryColor,
                       onTap: (index) {
                         setState(() {
                           _currentIndex = index;
@@ -112,17 +144,11 @@ class _HomeViewState extends State<HomeView> {
                         Tab(
                           child: Text(
                             TaskConstants.PENDING,
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
                           ),
                         ),
                         Tab(
                           child: Text(
                             TaskConstants.COMPLETED,
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
                           ),
                         ),
                       ],
@@ -131,7 +157,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 preferredSize: Size(
                   double.infinity,
-                  AppBar().preferredSize.height + 70,
+                  AppBar().preferredSize.height + 100,
                 ),
               ),
               iconTheme: IconThemeData(
@@ -139,25 +165,44 @@ class _HomeViewState extends State<HomeView> {
               ),
               actions: [
                 Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Text(
-                      DateFormat('EEE, MMM dd').format(DateTime.now()),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
+                  child: Text(
+                    DateFormat('EEE, MMM dd').format(model.getSelectedDate()),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     right: 20,
-                //     left: 5,
-                //   ),
-                //   child: SvgPicture.asset(
-                //     'assets/icons/calendar.svg',
-                //     width: 25,
+
+                Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: IconButton(
+                    splashRadius: 18,
+                    color: Theme.of(context).primaryColorDark,
+                    icon: Icon(MdiIcons.calendarMonth),
+                    onPressed: () async {
+                      DateTime selectedDate = await showMyDatePicker(
+                        ctx: context,
+                        model: model,
+                      );
+                      if (selectedDate != null) {
+                        _calendarController.setSelectedDay(selectedDate);
+                        model.setSelectedDate(selectedDate);
+                      }
+                    },
+                  ),
+                ),
+                // InkWell(
+                //   radius: 12,
+                //   onTap: () {},
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(
+                //       right: 20,
+                //     ),
+                //     child: SvgPicture.asset(
+                //       'assets/icons/calendar.svg',
+                //       width: 25,
+                //     ),
                 //   ),
                 // ),
                 // PopupMenuButton(
