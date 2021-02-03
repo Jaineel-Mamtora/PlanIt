@@ -93,6 +93,12 @@ class _HomeViewState extends State<HomeView> {
       initialDate: DateTime.fromMillisecondsSinceEpoch(model.selectedDate),
       firstDate: DateTime(2015, 1, 1),
       lastDate: DateTime(2050, 12, 31),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light(),
+          child: child,
+        );
+      },
     );
   }
 
@@ -106,10 +112,12 @@ class _HomeViewState extends State<HomeView> {
         );
       },
       builder: (context, model, child) {
+        final size = MediaQuery.of(context).size;
         return DefaultTabController(
           length: 2,
           child: Scaffold(
             appBar: AppBar(
+              toolbarHeight: size.height * 0.27,
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               elevation: 2,
@@ -157,7 +165,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 preferredSize: Size(
                   double.infinity,
-                  AppBar().preferredSize.height + 100,
+                  AppBar().preferredSize.height,
                 ),
               ),
               iconTheme: IconThemeData(
@@ -175,9 +183,10 @@ class _HomeViewState extends State<HomeView> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.only(right: 5),
+                  padding: const EdgeInsets.only(right: 10),
                   child: IconButton(
-                    splashRadius: 18,
+                    splashRadius: 24,
+                    iconSize: 30,
                     color: Theme.of(context).primaryColorDark,
                     icon: Icon(MdiIcons.calendarMonth),
                     onPressed: () async {
@@ -188,23 +197,15 @@ class _HomeViewState extends State<HomeView> {
                       if (selectedDate != null) {
                         _calendarController.setSelectedDay(selectedDate);
                         model.setSelectedDate(selectedDate);
+                        if (_currentIndex == 0) {
+                          await _refreshIndicatorKey1.currentState.show();
+                        } else {
+                          await _refreshIndicatorKey2.currentState.show();
+                        }
                       }
                     },
                   ),
                 ),
-                // InkWell(
-                //   radius: 12,
-                //   onTap: () {},
-                //   child: Padding(
-                //     padding: const EdgeInsets.only(
-                //       right: 20,
-                //     ),
-                //     child: SvgPicture.asset(
-                //       'assets/icons/calendar.svg',
-                //       width: 25,
-                //     ),
-                //   ),
-                // ),
                 // PopupMenuButton(
                 //   child: Padding(
                 //     padding: const EdgeInsets.only(right: 20),
