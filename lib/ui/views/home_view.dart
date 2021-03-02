@@ -1,17 +1,17 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:table_calendar/table_calendar.dart';
 
-import 'package:PlanIt/colors.dart';
 import 'package:PlanIt/constants.dart';
 import 'package:PlanIt/ui/views/base_view.dart';
+import 'package:PlanIt/ui/utils/size_config.dart';
 import 'package:PlanIt/ui/components/custom_card.dart';
 import 'package:PlanIt/viewmodels/home_viewmodel.dart';
 import 'package:PlanIt/ui/components/custom_table_calendar.dart';
 import 'package:PlanIt/ui/components/custom_modal_bottom_sheet.dart';
 import 'package:PlanIt/ui/components/custom_task_complete_container.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = '/home';
@@ -60,8 +60,8 @@ class _HomeViewState extends State<HomeView> {
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: new BorderRadius.only(
-              topLeft: const Radius.circular(30.0),
-              topRight: const Radius.circular(30.0),
+              topLeft: Radius.circular(4.5 * SizeConfig.heightMultiplier),
+              topRight: Radius.circular(4.5 * SizeConfig.heightMultiplier),
             ),
           ),
           builder: (_) {
@@ -112,21 +112,17 @@ class _HomeViewState extends State<HomeView> {
         );
       },
       builder: (context, model, child) {
-        final size = MediaQuery.of(context).size;
         return DefaultTabController(
           length: 2,
           child: Scaffold(
             appBar: AppBar(
-              toolbarHeight: size.height * 0.27,
+              toolbarHeight: 30 * SizeConfig.heightMultiplier,
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               elevation: 2,
               title: Text(
                 APP_NAME,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
+                style: Theme.of(context).textTheme.headline6,
               ),
               bottom: PreferredSize(
                 child: Column(
@@ -139,6 +135,7 @@ class _HomeViewState extends State<HomeView> {
                           : _refreshIndicatorKey2,
                     ),
                     TabBar(
+                      labelPadding: const EdgeInsets.all(0),
                       indicatorPadding: const EdgeInsets.all(0),
                       labelColor: Theme.of(context).primaryColor,
                       unselectedLabelColor: Colors.black,
@@ -175,18 +172,14 @@ class _HomeViewState extends State<HomeView> {
                 Center(
                   child: Text(
                     DateFormat('EEE, MMM dd').format(model.getSelectedDate()),
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                    ),
+                    style: Theme.of(context).textTheme.headline3,
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: IconButton(
-                    splashRadius: 24,
-                    iconSize: 30,
+                    splashRadius: 3.57 * SizeConfig.heightMultiplier,
+                    iconSize: 4.46 * SizeConfig.heightMultiplier,
                     color: Theme.of(context).primaryColorDark,
                     icon: Icon(MdiIcons.calendarMonth),
                     onPressed: () async {
@@ -314,9 +307,9 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           )
                         : ListView.builder(
-                            padding: const EdgeInsets.only(
-                              top: 16,
-                              bottom: 60,
+                            padding: EdgeInsets.only(
+                              top: 2.38 * SizeConfig.heightMultiplier,
+                              bottom: 8.93 * SizeConfig.heightMultiplier,
                             ),
                             itemCount: model.pendingTasks.length,
                             itemBuilder: (context, index) {
@@ -371,9 +364,9 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           )
                         : ListView.builder(
-                            padding: const EdgeInsets.only(
-                              top: 16,
-                              bottom: 60,
+                            padding: EdgeInsets.only(
+                              top: 2.38 * SizeConfig.heightMultiplier,
+                              bottom: 8.93 * SizeConfig.heightMultiplier,
                             ),
                             itemCount: model.completedTasks.length,
                             itemBuilder: (context, index) {
@@ -391,16 +384,21 @@ class _HomeViewState extends State<HomeView> {
                                                 .completedTasks[index].title,
                                           )
                                         : Container(),
-                                    SizedBox(height: 15),
+                                    SizedBox(
+                                      height:
+                                          2.23 * SizeConfig.heightMultiplier,
+                                    ),
                                   ],
                                 );
                               }
                               return Center(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 70),
+                                  padding: EdgeInsets.only(
+                                    bottom: 10.42 * SizeConfig.heightMultiplier,
+                                  ),
                                   child: SvgPicture.asset(
                                     'assets/icons/no_tasks_found.svg',
-                                    height: 150,
+                                    height: 22.32 * SizeConfig.heightMultiplier,
                                   ),
                                 ),
                               );
@@ -413,8 +411,8 @@ class _HomeViewState extends State<HomeView> {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
+              padding: EdgeInsets.symmetric(
+                horizontal: 3 * SizeConfig.heightMultiplier,
               ),
               child: InkWell(
                 onTap: () => _addPlanBottomSheet(
@@ -426,23 +424,24 @@ class _HomeViewState extends State<HomeView> {
                   borderRadius: BorderRadius.circular(5.0),
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    height: 45,
+                    height: 6.7 * SizeConfig.heightMultiplier,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
                         color: Theme.of(context).primaryColor,
                       ),
-                      borderRadius: BorderRadius.circular(5.0),
+                      borderRadius: BorderRadius.circular(
+                        0.74 * SizeConfig.heightMultiplier,
+                      ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(
+                        left: 1.49 * SizeConfig.heightMultiplier,
+                      ),
                       child: Text(
                         TaskConstants.WHAT_DO_YOU_NEED_TO_DO,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: GREY,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                   ),

@@ -13,6 +13,7 @@ import 'package:PlanIt/models/task.dart';
 import 'package:PlanIt/enums/status.dart';
 import 'package:PlanIt/enums/reminder.dart';
 import 'package:PlanIt/enums/priority.dart';
+import 'package:PlanIt/ui/utils/size_config.dart';
 import 'package:PlanIt/viewmodels/home_viewmodel.dart';
 import 'package:PlanIt/services/database_service.dart';
 import 'package:PlanIt/managers/notification_handler.dart';
@@ -154,7 +155,7 @@ class _CustomModalBottomSheetState extends State<CustomModalBottomSheet> {
     final Size deviceSize = mediaQuery.size;
     return Container(
       margin: EdgeInsets.only(
-        top: mediaQuery.padding.top + 35,
+        top: 5.2 * SizeConfig.heightMultiplier,
       ),
       height: deviceSize.height * 0.7 + mediaQuery.viewInsets.bottom,
       padding: EdgeInsets.only(

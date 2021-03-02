@@ -40,7 +40,9 @@ class _CustomTableCalendarState extends State<CustomTableCalendar> {
       calendarController: widget.controller,
       headerVisible: true,
       headerStyle: HeaderStyle(
-        headerPadding: const EdgeInsets.all(0),
+        leftChevronVisible: false,
+        rightChevronVisible: false,
+        headerPadding: const EdgeInsets.only(bottom: 10),
         centerHeaderTitle: true,
         titleTextStyle: TextStyle(
           fontFamily: FONT_NAME,
