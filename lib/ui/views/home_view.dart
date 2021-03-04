@@ -1,15 +1,19 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'package:PlanIt/colors.dart';
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/ui/views/base_view.dart';
-import 'package:PlanIt/ui/components/custom_card.dart';
-import 'package:PlanIt/viewmodels/home_viewmodel.dart';
-import 'package:PlanIt/ui/components/custom_table_calendar.dart';
-import 'package:PlanIt/ui/components/custom_modal_bottom_sheet.dart';
-import 'package:PlanIt/ui/components/custom_task_complete_container.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/views/base_view.dart';
+import 'package:plan_it/ui/views/task_view.dart';
+import 'package:plan_it/ui/utils/size_config.dart';
+import 'package:plan_it/ui/components/custom_card.dart';
+import 'package:plan_it/viewmodels/home_viewmodel.dart';
+import 'package:plan_it/services/navigation_service.dart';
+import 'package:plan_it/ui/components/custom_table_calendar.dart';
+import 'package:plan_it/ui/components/custom_task_complete_container.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = '/home';
@@ -31,42 +35,40 @@ class _HomeViewState extends State<HomeView> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _refreshIndicatorKey1 = GlobalKey<RefreshIndicatorState>();
   final _refreshIndicatorKey2 = GlobalKey<RefreshIndicatorState>();
+  final _navigationService = locator<NavigationService>();
+  CalendarController _calendarController;
   var _currentIndex = 0;
 
   DateTime selectedDate;
 
-  Future _addPlanBottomSheet({
+  @override
+  void initState() {
+    super.initState();
+    _calendarController = CalendarController();
+  }
+
+  @override
+  void dispose() {
+    _calendarController.dispose();
+    super.dispose();
+  }
+
+  Future<DateTime> showMyDatePicker({
     BuildContext ctx,
     HomeViewModel model,
   }) async {
-    var result = await showModalBottomSheet(
-          context: ctx,
-          isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-          shape: RoundedRectangleBorder(
-            borderRadius: new BorderRadius.only(
-              topLeft: const Radius.circular(30.0),
-              topRight: const Radius.circular(30.0),
-            ),
-          ),
-          builder: (_) {
-            return CustomModalBottomSheet(
-              date: model.getSelectedDate(),
-              model: model,
-              refreshKey: _currentIndex == 0
-                  ? _refreshIndicatorKey1
-                  : _refreshIndicatorKey2,
-            );
-          },
-        ) ??
-        false;
-    if (result == true) {
-      if (_currentIndex == 0) {
-        await _refreshIndicatorKey1.currentState.show();
-      } else {
-        await _refreshIndicatorKey2.currentState.show();
-      }
-    }
+    return showDatePicker(
+      context: ctx,
+      initialDate: DateTime.fromMillisecondsSinceEpoch(model.selectedDate),
+      firstDate: DateTime(2015, 1, 1),
+      lastDate: DateTime(2050, 12, 31),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light(),
+          child: child,
+        );
+      },
+    );
   }
 
   @override
@@ -83,26 +85,30 @@ class _HomeViewState extends State<HomeView> {
           length: 2,
           child: Scaffold(
             appBar: AppBar(
+              toolbarHeight: 31 * SizeConfig.heightMultiplier,
               brightness: Brightness.light,
               backgroundColor: Colors.white,
               elevation: 2,
               title: Text(
                 APP_NAME,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                ),
+                style: Theme.of(context).textTheme.headline6,
               ),
               bottom: PreferredSize(
                 child: Column(
                   children: [
                     CustomTableCalendar(
+                      controller: _calendarController,
                       model: model,
                       refreshKey: _currentIndex == 0
                           ? _refreshIndicatorKey1
                           : _refreshIndicatorKey2,
                     ),
                     TabBar(
+                      labelPadding: const EdgeInsets.all(0),
+                      indicatorPadding: const EdgeInsets.all(0),
+                      labelColor: Theme.of(context).primaryColor,
+                      unselectedLabelColor: Colors.black,
+                      indicatorColor: Theme.of(context).primaryColor,
                       onTap: (index) {
                         setState(() {
                           _currentIndex = index;
@@ -113,7 +119,7 @@ class _HomeViewState extends State<HomeView> {
                           child: Text(
                             TaskConstants.PENDING,
                             style: TextStyle(
-                              color: Colors.black,
+                              fontSize: 2.3 * SizeConfig.textMultiplier,
                             ),
                           ),
                         ),
@@ -121,7 +127,7 @@ class _HomeViewState extends State<HomeView> {
                           child: Text(
                             TaskConstants.COMPLETED,
                             style: TextStyle(
-                              color: Colors.black,
+                              fontSize: 2.3 * SizeConfig.textMultiplier,
                             ),
                           ),
                         ),
@@ -131,7 +137,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 preferredSize: Size(
                   double.infinity,
-                  AppBar().preferredSize.height + 70,
+                  AppBar().preferredSize.height,
                 ),
               ),
               iconTheme: IconThemeData(
@@ -139,27 +145,38 @@ class _HomeViewState extends State<HomeView> {
               ),
               actions: [
                 Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: Text(
-                      DateFormat('EEE, MMM dd').format(DateTime.now()),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                      ),
+                  child: Text(
+                    DateFormat('EEE, MMM dd').format(model.getSelectedDate()),
+                    style: TextStyle(
+                      fontSize: 2.57 * SizeConfig.textMultiplier,
+                      color: Colors.black,
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     right: 20,
-                //     left: 5,
-                //   ),
-                //   child: SvgPicture.asset(
-                //     'assets/icons/calendar.svg',
-                //     width: 25,
-                //   ),
-                // ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: IconButton(
+                    splashRadius: 3.57 * SizeConfig.heightMultiplier,
+                    iconSize: 4.46 * SizeConfig.heightMultiplier,
+                    color: Theme.of(context).primaryColorDark,
+                    icon: Icon(MdiIcons.calendarMonth),
+                    onPressed: () async {
+                      DateTime selectedDate = await showMyDatePicker(
+                        ctx: context,
+                        model: model,
+                      );
+                      if (selectedDate != null) {
+                        _calendarController.setSelectedDay(selectedDate);
+                        model.setSelectedDate(selectedDate);
+                        if (_currentIndex == 0) {
+                          await _refreshIndicatorKey1.currentState.show();
+                        } else {
+                          await _refreshIndicatorKey2.currentState.show();
+                        }
+                      }
+                    },
+                  ),
+                ),
                 // PopupMenuButton(
                 //   child: Padding(
                 //     padding: const EdgeInsets.only(right: 20),
@@ -268,9 +285,9 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           )
                         : ListView.builder(
-                            padding: const EdgeInsets.only(
-                              top: 16,
-                              bottom: 60,
+                            padding: EdgeInsets.only(
+                              top: 2.38 * SizeConfig.heightMultiplier,
+                              bottom: 8.93 * SizeConfig.heightMultiplier,
                             ),
                             itemCount: model.pendingTasks.length,
                             itemBuilder: (context, index) {
@@ -282,6 +299,7 @@ class _HomeViewState extends State<HomeView> {
                                       ? CustomCard(
                                           refreshKey: _refreshIndicatorKey1,
                                           taskEntity: model.pendingTasks[index],
+                                          dateSelected: model.getSelectedDate(),
                                         )
                                       : Container(),
                                   SizedBox(height: 15),
@@ -325,9 +343,9 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           )
                         : ListView.builder(
-                            padding: const EdgeInsets.only(
-                              top: 16,
-                              bottom: 60,
+                            padding: EdgeInsets.only(
+                              top: 2.38 * SizeConfig.heightMultiplier,
+                              bottom: 8.93 * SizeConfig.heightMultiplier,
                             ),
                             itemCount: model.completedTasks.length,
                             itemBuilder: (context, index) {
@@ -345,16 +363,21 @@ class _HomeViewState extends State<HomeView> {
                                                 .completedTasks[index].title,
                                           )
                                         : Container(),
-                                    SizedBox(height: 15),
+                                    SizedBox(
+                                      height:
+                                          2.23 * SizeConfig.heightMultiplier,
+                                    ),
                                   ],
                                 );
                               }
                               return Center(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(bottom: 70),
+                                  padding: EdgeInsets.only(
+                                    bottom: 10.42 * SizeConfig.heightMultiplier,
+                                  ),
                                   child: SvgPicture.asset(
                                     'assets/icons/no_tasks_found.svg',
-                                    height: 150,
+                                    height: 22.32 * SizeConfig.heightMultiplier,
                                   ),
                                 ),
                               );
@@ -367,36 +390,41 @@ class _HomeViewState extends State<HomeView> {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
+              padding: EdgeInsets.symmetric(
+                horizontal: 3 * SizeConfig.heightMultiplier,
               ),
               child: InkWell(
-                onTap: () => _addPlanBottomSheet(
-                  ctx: context,
-                  model: model,
-                ),
+                onTap: () => _navigationService
+                    .pushNamed(TaskView.routeName, arguments: {
+                  'refreshKey': _currentIndex == 0
+                      ? _refreshIndicatorKey1
+                      : _refreshIndicatorKey2,
+                  'isEditing': false,
+                  'dateSelected': model.getSelectedDate(),
+                }),
                 child: Material(
                   elevation: 5,
                   borderRadius: BorderRadius.circular(5.0),
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    height: 45,
+                    height: 6.7 * SizeConfig.heightMultiplier,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
                         color: Theme.of(context).primaryColor,
                       ),
-                      borderRadius: BorderRadius.circular(5.0),
+                      borderRadius: BorderRadius.circular(
+                        0.74 * SizeConfig.heightMultiplier,
+                      ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(
+                        left: 1.49 * SizeConfig.heightMultiplier,
+                      ),
                       child: Text(
                         TaskConstants.WHAT_DO_YOU_NEED_TO_DO,
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: GREY,
-                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
                   ),

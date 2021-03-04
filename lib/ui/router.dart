@@ -1,11 +1,12 @@
 import 'package:sprintf/sprintf.dart';
 import 'package:flutter/material.dart';
 
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/ui/views/home_view.dart';
-import 'package:PlanIt/ui/views/login_view.dart';
-import 'package:PlanIt/ui/views/signup_view.dart';
-import 'package:PlanIt/ui/views/verification_view.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/views/task_view.dart';
+import 'package:plan_it/ui/views/home_view.dart';
+import 'package:plan_it/ui/views/login_view.dart';
+import 'package:plan_it/ui/views/signup_view.dart';
+import 'package:plan_it/ui/views/verification_view.dart';
 
 class CustomRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -24,6 +25,16 @@ class CustomRouter {
         );
       case VerificationView.routeName:
         return MaterialPageRoute(builder: (_) => VerificationView());
+      case TaskView.routeName:
+        var _args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (_) => TaskView(
+            refreshIndicatorKey: _args['refreshKey'],
+            isEditing: _args['isEditing'],
+            task: _args['task'],
+            dateSelected: _args['dateSelected'],
+          ),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

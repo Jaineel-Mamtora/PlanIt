@@ -2,40 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:plan_it/locator.dart';
 import 'package:plan_it/constants.dart';
-import 'package:plan_it/models/task.dart';
 import 'package:plan_it/ui/utils/date.dart';
-import 'package:plan_it/services/database_service.dart';
 import 'package:plan_it/viewmodels/base_viewmodel.dart';
-import 'package:plan_it/services/local_storage_service.dart';
-import 'package:plan_it/services/firebase_authentication_service.dart';
+import 'package:plan_it/viewmodels/home_viewmodel.dart';
 
-class HomeViewModel extends BaseViewModel {
-  final _databaseService = locator<DatabaseService>();
-  final _localStorageService = locator<LocalStorageService>();
-  final _firebaseAuthenticationService =
-      locator<FirebaseAuthenticationService>();
+class TaskViewModel extends BaseViewModel {
+  final _homeViewModel = locator<HomeViewModel>();
   int selectedDate = dateTimeToEpoch(DateTime.now());
-  var pendingTasks = <Task>[];
-  var completedTasks = <Task>[];
 
-  Future<void> onModelReady({int taskId, int fromTime}) async {
-    if (taskId != 0 &&
-        fromTime != 0 &&
-        _localStorageService.isNotificationClicked == true) {
-      setSelectedDate(DateTime.fromMillisecondsSinceEpoch(fromTime));
-      _localStorageService.isNotificationClicked = false;
-    }
-    pendingTasks = await _databaseService
-        .queryPendingTask(getSelectedDate().millisecondsSinceEpoch);
-    completedTasks = await _databaseService
-        .queryCompletedTask(getSelectedDate().millisecondsSinceEpoch);
-    pendingTasks.sort((a, b) => a.fromTime.compareTo(b.fromTime));
-    completedTasks.sort((a, b) => a.fromTime.compareTo(b.fromTime));
-    notifyListeners();
-  }
+  Future<void> onModelReady() async {}
 
   Future<DateTime> selectDate(
-    HomeViewModel model,
     BuildContext ctx,
   ) async {
     final pickedDate = await showDatePicker(
@@ -46,10 +23,6 @@ class HomeViewModel extends BaseViewModel {
       helpText: CalendarConstants.JUMP_TO_A_PARTICULAR_DATE,
     );
     return pickedDate;
-  }
-
-  Future logout() async {
-    await _firebaseAuthenticationService.signOut();
   }
 
   void setSelectedDate(DateTime date) {
@@ -65,7 +38,7 @@ class HomeViewModel extends BaseViewModel {
     if (toTime != null) {
       toTimeEpoch = toTime.millisecondsSinceEpoch;
     }
-    pendingTasks.forEach((pendingTask) {
+    _homeViewModel.pendingTasks.forEach((pendingTask) {
       if (fromTimeEpoch >= pendingTask.fromTime &&
           fromTimeEpoch < pendingTask.toTime) {
         flag = 1;

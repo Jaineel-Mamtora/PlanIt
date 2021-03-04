@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:plan_it/ui/utils/size_config.dart';
+
 class CustomTextField extends StatelessWidget {
   final Function customOnTap;
   final FocusNode focusNode;
@@ -30,7 +32,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       style: TextStyle(
-        fontSize: 16,
+        fontSize: 2.4 * SizeConfig.heightMultiplier,
         color: Colors.black,
       ),
       autofocus: customAutoFocus ?? false,
@@ -45,16 +47,16 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         focusColor: Theme.of(context).primaryColor,
         hintText: labelText ?? null,
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 5.0,
-          horizontal: 10.0,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 0.75 * SizeConfig.heightMultiplier,
+          horizontal: 2.5 * SizeConfig.widthMultiplier,
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: Theme.of(context).primaryColor,
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(5),
+            Radius.circular(1.25 * SizeConfig.widthMultiplier),
           ),
         ),
         border: OutlineInputBorder(
@@ -62,7 +64,7 @@ class CustomTextField extends StatelessWidget {
             color: Theme.of(context).primaryColor,
           ),
           borderRadius: BorderRadius.all(
-            Radius.circular(5),
+            Radius.circular(1.25 * SizeConfig.widthMultiplier),
           ),
         ),
       ),

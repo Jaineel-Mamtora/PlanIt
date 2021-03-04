@@ -1,11 +1,11 @@
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/ui/views/home_view.dart';
-import 'package:PlanIt/enums/notification_type.dart';
-import 'package:PlanIt/services/navigation_service.dart';
-import 'package:PlanIt/services/local_storage_service.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/views/home_view.dart';
+import 'package:plan_it/enums/notification_type.dart';
+import 'package:plan_it/services/navigation_service.dart';
+import 'package:plan_it/services/local_storage_service.dart';
 
 class NotificationManager {
   final Map<String, dynamic> message;

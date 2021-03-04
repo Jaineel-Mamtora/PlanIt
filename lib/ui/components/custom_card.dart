@@ -1,27 +1,31 @@
-import 'package:PlanIt/enums/priority.dart';
-import 'package:PlanIt/enums/reminder.dart';
+import 'package:plan_it/ui/utils/size_config.dart';
 import 'package:intl/intl.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:PlanIt/colors.dart';
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/models/task.dart';
-import 'package:PlanIt/services/database_service.dart';
-import 'package:PlanIt/managers/notification_handler.dart';
+import 'package:plan_it/colors.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/models/task.dart';
+import 'package:plan_it/ui/views/task_view.dart';
+import 'package:plan_it/services/database_service.dart';
+import 'package:plan_it/services/navigation_service.dart';
+import 'package:plan_it/managers/notification_handler.dart';
 
 class CustomCard extends StatelessWidget {
   final _databaseService = locator<DatabaseService>();
+  final _navigationService = locator<NavigationService>();
   final Task taskEntity;
   final GlobalKey<RefreshIndicatorState> refreshKey;
+  final DateTime dateSelected;
 
   CustomCard({
     Key key,
     this.taskEntity,
     this.refreshKey,
+    this.dateSelected,
   }) : super(key: key);
 
   final Map<int, String> priorities = {
@@ -50,25 +54,22 @@ class CustomCard extends StatelessWidget {
         title: Text(
           TaskConstants.ACHIEVEMENT,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 5 * SizeConfig.widthMultiplier,
             color: Theme.of(context).primaryColorDark,
           ),
         ),
         content: Text(
           TaskConstants.DO_YOU_WANT_TO_MARK_THIS_TASK_AS_COMPLETED,
-          style: TextStyle(
-            fontSize: 14,
-            color: Theme.of(context).primaryColorDark,
-          ),
+          style: Theme.of(context).textTheme.bodyText2,
         ),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(GeneralConstants.NO),
             onPressed: () {
               Navigator.of(ctx).pop(false);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(GeneralConstants.YES),
             onPressed: () async {
               await _databaseService.update({
@@ -112,22 +113,24 @@ class CustomCard extends StatelessWidget {
       ],
     );
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.symmetric(horizontal: 3 * SizeConfig.widthMultiplier),
       child: Dismissible(
         key: ValueKey(taskEntity.id),
         background: Container(
           child: Icon(
             Icons.delete,
             color: Colors.white,
-            size: 40,
+            size: 10 * SizeConfig.widthMultiplier,
           ),
           alignment: Alignment.centerRight,
-          padding: const EdgeInsets.only(
-            right: 10,
+          padding: EdgeInsets.only(
+            right: 2.5 * SizeConfig.widthMultiplier,
           ),
           decoration: BoxDecoration(
             color: RED,
-            borderRadius: BorderRadius.circular(5.0),
+            borderRadius: BorderRadius.circular(
+              1.25 * SizeConfig.widthMultiplier,
+            ),
           ),
         ),
         direction: DismissDirection.endToStart,
@@ -139,25 +142,22 @@ class CustomCard extends StatelessWidget {
               title: Text(
                 TaskConstants.ARE_YOU_SURE,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 5 * SizeConfig.widthMultiplier,
                   color: Theme.of(context).primaryColorDark,
                 ),
               ),
               content: Text(
                 TaskConstants.DO_YOU_WANT_TO_REMOVE_PENDING_TASK,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context).primaryColorDark,
-                ),
+                style: Theme.of(context).textTheme.bodyText2,
               ),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text(GeneralConstants.NO),
                   onPressed: () {
                     Navigator.of(ctx).pop(false);
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text(GeneralConstants.YES),
                   onPressed: () {
                     Fluttertoast.showToast(
@@ -178,146 +178,110 @@ class CustomCard extends StatelessWidget {
               .cancel(taskEntity.id);
           await refreshKey.currentState.show();
         },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: LIGHT_GREY,
-            ),
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-          margin: const EdgeInsets.all(0),
-          child: ListTile(
+        child: Container(
+          height: 10.93 * SizeConfig.heightMultiplier,
+          child: Card(
+            semanticContainer: false,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5.0),
+              side: BorderSide(
+                color: LIGHT_GREY,
+              ),
+              borderRadius: BorderRadius.circular(
+                1.25 * SizeConfig.widthMultiplier,
+              ),
             ),
-            onTap: () {
-              showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (ctx) => AlertDialog(
-                  title: Text(
-                    TaskConstants.TASK_DETAILS,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
+            margin: const EdgeInsets.all(0),
+            child: Center(
+              child: ListTile(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    1.25 * SizeConfig.widthMultiplier,
                   ),
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'Title: ${taskEntity.title}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
-                      ),
-                      Text(
-                        taskEntity.toTime != null && taskEntity.toTime != 0
-                            ? 'Time: $fromTime $toTime'
-                            : 'Time: From $fromTime',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
-                      ),
-                      taskEntity.priority != 0
-                          ? Text(
-                              'Priority: ${getPriorityString(taskEntity.priority)}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context).primaryColorDark,
-                              ),
-                            )
-                          : Container(),
-                      taskEntity.reminder != -1
-                          ? Text(
-                              'Reminder: ${getReminderString(taskEntity.reminder)}',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Theme.of(context).primaryColorDark,
-                              ),
-                            )
-                          : Container(),
-                    ],
+                ),
+                onTap: () => _navigationService
+                    .pushNamed(TaskView.routeName, arguments: {
+                  'refreshKey': refreshKey,
+                  'isEditing': true,
+                  'task': taskEntity,
+                  'dateSelected': dateSelected,
+                }),
+                leading: GestureDetector(
+                  onTap: () =>
+                      markAsCompleteComfirmationDialog(context: context),
+                  child: SvgPicture.asset(
+                    'assets/icons/check_circle.svg',
+                    height: 7.71 * SizeConfig.heightMultiplier,
+                    width: 15 * SizeConfig.widthMultiplier,
                   ),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text('OK'),
-                      onPressed: () {
-                        Navigator.of(ctx).pop(false);
-                      },
+                ),
+                title: Text(
+                  taskEntity.title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 3.08 * SizeConfig.heightMultiplier,
+                  ),
+                ),
+                subtitle: Row(
+                  children: <Widget>[
+                    Text(
+                      fromTime,
+                      style: TextStyle(
+                        fontSize: 2.06 * SizeConfig.heightMultiplier,
+                      ),
                     ),
+                    taskEntity.toTime != null && taskEntity.toTime != 0
+                        ? Text(
+                            toTime,
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                          )
+                        : Container(width: 0, height: 0),
                   ],
                 ),
-              );
-            },
-            leading: GestureDetector(
-              onTap: () => markAsCompleteComfirmationDialog(context: context),
-              child: SvgPicture.asset(
-                'assets/icons/check_circle.svg',
-                height: 45,
-                width: 45,
-              ),
-            ),
-            title: Text(
-              taskEntity.title,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
-            subtitle: Row(
-              children: <Widget>[
-                Text(
-                  fromTime,
-                  style: TextStyle(
-                    fontSize: 14,
-                  ),
-                ),
-                taskEntity.toTime != null && taskEntity.toTime != 0
-                    ? Text(
-                        toTime,
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      )
-                    : Container(width: 0, height: 0),
-              ],
-            ),
-            trailing: taskEntity.priority == 0 && taskEntity.reminder == -1
-                ? Container(width: 0)
-                : taskEntity.priority != 0 && taskEntity.reminder == -1
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 5),
-                        child: SvgPicture.asset(
-                          getReminderSVG(taskEntity.priority),
-                          height: 12,
-                        ),
-                      )
-                    : taskEntity.priority == 0 && taskEntity.reminder != -1
-                        ? SvgPicture.asset(
-                            'assets/icons/bell_notification.svg',
-                            width: 26,
-                          )
-                        : Container(
-                            width: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                SvgPicture.asset(
-                                  getReminderSVG(taskEntity.priority),
-                                  height: 12,
-                                ),
-                                SvgPicture.asset(
-                                  'assets/icons/bell_notification.svg',
-                                  width: 26,
-                                )
-                              ],
+                trailing: taskEntity.priority == 0 && taskEntity.reminder == -1
+                    ? Container(width: 0)
+                    : taskEntity.priority != 0 && taskEntity.reminder == -1
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                              right: 3 * SizeConfig.widthMultiplier,
                             ),
-                          ),
+                            child: SvgPicture.asset(
+                              getReminderSVG(taskEntity.priority),
+                              height: 2.06 * SizeConfig.heightMultiplier,
+                            ),
+                          )
+                        : taskEntity.priority == 0 && taskEntity.reminder != -1
+                            ? SvgPicture.asset(
+                                'assets/icons/bell_notification.svg',
+                                width: 7.5 * SizeConfig.widthMultiplier,
+                              )
+                            : Padding(
+                                padding: EdgeInsets.only(
+                                  right: 1.25 * SizeConfig.widthMultiplier,
+                                ),
+                                child: Container(
+                                  width: 15 * SizeConfig.widthMultiplier,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      SvgPicture.asset(
+                                        getReminderSVG(taskEntity.priority),
+                                        height:
+                                            2.06 * SizeConfig.heightMultiplier,
+                                      ),
+                                      SvgPicture.asset(
+                                        'assets/icons/bell_notification.svg',
+                                        width: 7.5 * SizeConfig.widthMultiplier,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+              ),
+            ),
           ),
         ),
       ),

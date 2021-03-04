@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/viewmodels/base_viewmodel.dart';
-import 'package:PlanIt/managers/lifecycle_event_handler.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/viewmodels/base_viewmodel.dart';
+import 'package:plan_it/managers/lifecycle_event_handler.dart';
 
 class BaseView<T extends BaseViewModel> extends StatefulWidget {
   final Widget Function(

@@ -9,9 +9,9 @@ import 'package:timezone/data/latest.dart' as tz;
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/models/recieve_notification.dart';
-import 'package:PlanIt/managers/notification_manager.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/models/recieve_notification.dart';
+import 'package:plan_it/managers/notification_manager.dart';
 
 class NotificationHandler {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -116,6 +116,7 @@ class NotificationHandler {
       importance: Importance.max,
       priority: Priority.high,
       styleInformation: bigPictureStyleInformation,
+      color: Color(0xFF0080FF),
     );
     var iOSChannel = IOSNotificationDetails(
       attachments: [IOSNotificationAttachment(bigPicturePath)],
@@ -160,6 +161,7 @@ class NotificationHandler {
       importance: Importance.max,
       priority: Priority.high,
       styleInformation: bigTextStyleInformation,
+      color: Color(0xFF0080FF),
       largeIcon:
           DrawableResourceAndroidBitmap('@mipmap/notification_large_icon'),
     );

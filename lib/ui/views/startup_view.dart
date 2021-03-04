@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/ui/views/base_view.dart';
-import 'package:PlanIt/viewmodels/startup_viewmodel.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/views/base_view.dart';
+import 'package:plan_it/viewmodels/startup_viewmodel.dart';
 
 class StartUpView extends StatelessWidget {
   @override

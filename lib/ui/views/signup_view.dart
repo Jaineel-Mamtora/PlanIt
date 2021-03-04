@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/ui/views/base_view.dart';
-import 'package:PlanIt/ui/views/login_view.dart';
-import 'package:PlanIt/viewmodels/signup_viewmodel.dart';
-import 'package:PlanIt/services/navigation_service.dart';
-import 'package:PlanIt/ui/components/custom_text_field.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/views/base_view.dart';
+import 'package:plan_it/ui/views/login_view.dart';
+import 'package:plan_it/viewmodels/signup_viewmodel.dart';
+import 'package:plan_it/services/navigation_service.dart';
+import 'package:plan_it/ui/components/custom_text_field.dart';
 
 class SignUpView extends StatefulWidget {
   static const routeName = '/signup';
@@ -146,25 +146,25 @@ class _SignUpViewState extends State<SignUpView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
                                         children: [
-                                          RaisedButton(
-                                            color: Colors.white,
-                                            elevation: 3,
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 40,
-                                              vertical: 5,
-                                            ),
-                                            materialTapTargetSize:
-                                                MaterialTapTargetSize
-                                                    .shrinkWrap,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                              side: BorderSide(
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                width: 2,
-                                              ),
-                                            ),
+                                          ElevatedButton(
+                                            // color: Colors.white,
+                                            // elevation: 3,
+                                            // padding: EdgeInsets.symmetric(
+                                            //   horizontal: 40,
+                                            //   vertical: 5,
+                                            // ),
+                                            // materialTapTargetSize:
+                                            //     MaterialTapTargetSize
+                                            //         .shrinkWrap,
+                                            // shape: RoundedRectangleBorder(
+                                            //   borderRadius:
+                                            //       BorderRadius.circular(4),
+                                            //   side: BorderSide(
+                                            //     color: Theme.of(context)
+                                            //         .primaryColor,
+                                            //     width: 2,
+                                            //   ),
+                                            // ),
                                             onPressed: () {
                                               model.signUpWithEmail(
                                                 email: _emailController.text,
@@ -241,22 +241,22 @@ class _SignUpViewState extends State<SignUpView> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
                                         children: [
-                                          RaisedButton.icon(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 20,
-                                              vertical: 5,
-                                            ),
-                                            highlightColor: Color(0xFF0066CC),
-                                            elevation: 3,
-                                            materialTapTargetSize:
-                                                MaterialTapTargetSize
-                                                    .shrinkWrap,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                            ),
-                                            color:
-                                                Color.fromRGBO(76, 139, 245, 1),
+                                          ElevatedButton.icon(
+                                            // padding: const EdgeInsets.symmetric(
+                                            //   horizontal: 20,
+                                            //   vertical: 5,
+                                            // ),
+                                            // highlightColor: Color(0xFF0066CC),
+                                            // elevation: 3,
+                                            // materialTapTargetSize:
+                                            //     MaterialTapTargetSize
+                                            //         .shrinkWrap,
+                                            // shape: RoundedRectangleBorder(
+                                            //   borderRadius:
+                                            //       BorderRadius.circular(4),
+                                            // ),
+                                            // color:
+                                            //     Color.fromRGBO(76, 139, 245, 1),
                                             icon: CircleAvatar(
                                               backgroundColor: Colors.white,
                                               radius: 13,
