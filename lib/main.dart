@@ -1,17 +1,17 @@
-import 'package:PlanIt/styling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/ui/router.dart';
-import 'package:PlanIt/ui/utils/size_config.dart';
-import 'package:PlanIt/ui/views/startup_view.dart';
-import 'package:PlanIt/services/navigation_service.dart';
-import 'package:PlanIt/managers/notification_handler.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/styling.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/router.dart';
+import 'package:plan_it/ui/utils/size_config.dart';
+import 'package:plan_it/ui/views/startup_view.dart';
+import 'package:plan_it/services/navigation_service.dart';
+import 'package:plan_it/managers/notification_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

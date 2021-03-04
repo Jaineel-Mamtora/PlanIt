@@ -1,11 +1,12 @@
-import 'package:PlanIt/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:PlanIt/colors.dart';
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/services/database_service.dart';
+import 'package:plan_it/colors.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/utils/size_config.dart';
+import 'package:plan_it/services/database_service.dart';
 
 class CustomTaskCompleteContainer extends StatelessWidget {
   final _databaseService = locator<DatabaseService>();
@@ -22,22 +23,26 @@ class CustomTaskCompleteContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: EdgeInsets.symmetric(
+        horizontal: 3 * SizeConfig.widthMultiplier,
+      ),
       child: Dismissible(
         key: ValueKey(id),
         background: Container(
           child: Icon(
             Icons.delete,
             color: Colors.white,
-            size: 30,
+            size: 7.5 * SizeConfig.widthMultiplier,
           ),
           alignment: Alignment.centerRight,
-          padding: const EdgeInsets.only(
-            right: 10,
+          padding: EdgeInsets.only(
+            right: 2.5 * SizeConfig.widthMultiplier,
           ),
           decoration: BoxDecoration(
             color: RED,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(
+              4 * SizeConfig.widthMultiplier,
+            ),
           ),
         ),
         direction: DismissDirection.endToStart,
@@ -48,26 +53,20 @@ class CustomTaskCompleteContainer extends StatelessWidget {
             builder: (ctx) => AlertDialog(
               title: Text(
                 TaskConstants.ARE_YOU_SURE,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).primaryColorDark,
-                ),
+                style: Theme.of(context).textTheme.bodyText2,
               ),
               content: Text(
                 TaskConstants.DO_YOU_WANT_TO_REMOVE_COMPLETED_TASK,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context).primaryColorDark,
-                ),
+                style: Theme.of(context).textTheme.headline3,
               ),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text(GeneralConstants.NO),
                   onPressed: () {
                     Navigator.of(ctx).pop(false);
                   },
                 ),
-                FlatButton(
+                TextButton(
                   child: Text(GeneralConstants.YES),
                   onPressed: () async {
                     Fluttertoast.showToast(
@@ -89,35 +88,44 @@ class CustomTaskCompleteContainer extends StatelessWidget {
         child: Card(
           margin: const EdgeInsets.all(0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(
+              5 * SizeConfig.widthMultiplier,
+            ),
           ),
           child: Container(
-            height: 40,
+            height: 7.44 * SizeConfig.heightMultiplier,
             decoration: BoxDecoration(
               color: LIGHT_BLUE,
               border: Border.all(
                 color: BLUE,
               ),
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(
+                4 * SizeConfig.widthMultiplier,
+              ),
             ),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(
+                      4 * SizeConfig.widthMultiplier,
+                    ),
                     color: Colors.transparent,
                   ),
-                  margin: const EdgeInsets.symmetric(horizontal: 30),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 7.5 * SizeConfig.widthMultiplier,
+                  ),
                   child: SvgPicture.asset(
                     'assets/icons/checkmark.svg',
-                    width: 20,
-                    height: 18,
+                    width: 6.5 * SizeConfig.widthMultiplier,
+                    height: 3.42 * SizeConfig.heightMultiplier,
                   ),
                 ),
                 Text(
                   title,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 5.5 * SizeConfig.widthMultiplier,
                   ),
                 ),
               ],

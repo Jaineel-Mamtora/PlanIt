@@ -29,8 +29,8 @@ class SizeConfig {
       isMobilePortrait = false;
     }
 
-    _blockWidth = _screenWidth / 100;
-    _blockHeight = _screenHeight / 100;
+    _blockWidth = _screenWidth / 115;
+    _blockHeight = _screenHeight / 115;
 
     textMultiplier = _blockHeight;
     imageSizeMultiplier = _blockWidth;

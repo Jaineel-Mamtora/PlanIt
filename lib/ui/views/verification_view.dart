@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/ui/views/base_view.dart';
-import 'package:PlanIt/ui/utils/background_clipper.dart';
-import 'package:PlanIt/viewmodels/verification_viewmodel.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/views/base_view.dart';
+import 'package:plan_it/ui/utils/background_clipper.dart';
+import 'package:plan_it/viewmodels/verification_viewmodel.dart';
 
 class VerificationView extends StatelessWidget {
   static const routeName = '/verification';
@@ -84,22 +84,22 @@ class VerificationView extends StatelessWidget {
                                       right: 20,
                                       top: 8,
                                     ),
-                                    child: RaisedButton(
-                                      color: Colors.white,
-                                      elevation: 2,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 40,
-                                        vertical: 5,
-                                      ),
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        side: BorderSide(
-                                          color: Theme.of(context).primaryColor,
-                                          width: 3,
-                                        ),
-                                      ),
+                                    child: ElevatedButton(
+                                      // color: Colors.white,
+                                      // elevation: 2,
+                                      // padding: EdgeInsets.symmetric(
+                                      //   horizontal: 40,
+                                      //   vertical: 5,
+                                      // ),
+                                      // materialTapTargetSize:
+                                      //     MaterialTapTargetSize.shrinkWrap,
+                                      // shape: RoundedRectangleBorder(
+                                      //   borderRadius: BorderRadius.circular(20),
+                                      //   side: BorderSide(
+                                      //     color: Theme.of(context).primaryColor,
+                                      //     width: 3,
+                                      //   ),
+                                      // ),
                                       onPressed: () => model.refresh(context),
                                       child: Text(
                                         AuthConstants.REFRESH,
@@ -113,22 +113,22 @@ class VerificationView extends StatelessWidget {
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(top: 8),
-                                    child: RaisedButton(
-                                      color: Colors.white,
-                                      elevation: 2,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 40,
-                                        vertical: 5,
-                                      ),
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        side: BorderSide(
-                                          color: Theme.of(context).primaryColor,
-                                          width: 3,
-                                        ),
-                                      ),
+                                    child: ElevatedButton(
+                                      // color: Colors.white,
+                                      // elevation: 2,
+                                      // padding: EdgeInsets.symmetric(
+                                      //   horizontal: 40,
+                                      //   vertical: 5,
+                                      // ),
+                                      // materialTapTargetSize:
+                                      //     MaterialTapTargetSize.shrinkWrap,
+                                      // shape: RoundedRectangleBorder(
+                                      //   borderRadius: BorderRadius.circular(20),
+                                      //   side: BorderSide(
+                                      //     color: Theme.of(context).primaryColor,
+                                      //     width: 3,
+                                      //   ),
+                                      // ),
                                       onPressed: () =>
                                           model.sendVerificationMail(),
                                       child: Text(
@@ -147,22 +147,22 @@ class VerificationView extends StatelessWidget {
                                       right: 20,
                                       top: 8,
                                     ),
-                                    child: RaisedButton(
-                                      color: Colors.white,
-                                      elevation: 2,
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 40,
-                                        vertical: 5,
-                                      ),
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                        side: BorderSide(
-                                          color: Theme.of(context).primaryColor,
-                                          width: 3,
-                                        ),
-                                      ),
+                                    child: ElevatedButton(
+                                      // color: Colors.white,
+                                      // elevation: 2,
+                                      // padding: EdgeInsets.symmetric(
+                                      //   horizontal: 40,
+                                      //   vertical: 5,
+                                      // ),
+                                      // materialTapTargetSize:
+                                      //     MaterialTapTargetSize.shrinkWrap,
+                                      // shape: RoundedRectangleBorder(
+                                      //   borderRadius: BorderRadius.circular(20),
+                                      //   side: BorderSide(
+                                      //     color: Theme.of(context).primaryColor,
+                                      //     width: 3,
+                                      //   ),
+                                      // ),
                                       onPressed: () => model.signOut(),
                                       child: Text(
                                         AuthConstants.SIGN_OUT,

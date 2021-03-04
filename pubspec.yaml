@@ -1,4 +1,4 @@
-name: PlanIt
+name: plan_it
 description: Plan it and Organize.
 
 publish_to: "none"
@@ -18,7 +18,7 @@ dependencies:
   firebase_core:
   flutter_local_notifications: ^4.0.0
   flutter_native_timezone: ^1.0.4
-  flutter_svg:
+  flutter_svg: ^0.19.3
   fluttertoast:
   get:
   get_it:

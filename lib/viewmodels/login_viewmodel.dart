@@ -1,9 +1,9 @@
-import 'package:PlanIt/enums/viewstate.dart';
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/ui/views/home_view.dart';
-import 'package:PlanIt/viewmodels/base_viewmodel.dart';
-import 'package:PlanIt/services/navigation_service.dart';
-import 'package:PlanIt/services/firebase_authentication_service.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/enums/viewstate.dart';
+import 'package:plan_it/ui/views/home_view.dart';
+import 'package:plan_it/viewmodels/base_viewmodel.dart';
+import 'package:plan_it/services/navigation_service.dart';
+import 'package:plan_it/services/firebase_authentication_service.dart';
 
 class LoginViewModel extends BaseViewModel {
   final _firebaseAuthenticationService =

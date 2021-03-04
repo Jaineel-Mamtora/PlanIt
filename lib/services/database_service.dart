@@ -1,9 +1,9 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_migration_service/sqflite_migration_service.dart';
 
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/models/task.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/models/task.dart';
 
 class DatabaseService {
   final _migrationService = locator<DatabaseMigrationService>();

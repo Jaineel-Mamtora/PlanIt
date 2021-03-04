@@ -1,10 +1,10 @@
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/ui/views/home_view.dart';
-// import 'package:PlanIt/ui/views/signup_view.dart';
-import 'package:PlanIt/services/database_service.dart';
-import 'package:PlanIt/viewmodels/base_viewmodel.dart';
-import 'package:PlanIt/services/navigation_service.dart';
-// import 'package:PlanIt/services/local_storage_service.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/ui/views/home_view.dart';
+// import 'package:plan_it/ui/views/signup_view.dart';
+import 'package:plan_it/services/database_service.dart';
+import 'package:plan_it/viewmodels/base_viewmodel.dart';
+import 'package:plan_it/services/navigation_service.dart';
+// import 'package:plan_it/services/local_storage_service.dart';
 
 class StartUpViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();

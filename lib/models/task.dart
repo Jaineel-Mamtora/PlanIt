@@ -1,5 +1,5 @@
 class Task {
-  final int id;
+  int id;
   final String title;
   final int date; // millisecondsSinchEpoch
   final int fromTime; // millisecondsSinchEpoch

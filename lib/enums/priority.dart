@@ -13,9 +13,10 @@ Map<int, String> priorityMap = {
 };
 
 Map<int, String> priorityAssetMap = {
-  0: 'assets/icons/radio_green_enable.svg',
-  1: 'assets/icons/radio_yellow_enable.svg',
-  2: 'assets/icons/radio_red_enable.svg',
+  0: 'None',
+  1: 'assets/icons/radio_green_enable.svg',
+  2: 'assets/icons/radio_yellow_enable.svg',
+  3: 'assets/icons/radio_red_enable.svg',
 };
 
 String getPriorityString(int index) {
@@ -26,4 +27,8 @@ int getPriorityIndex(String priority) {
   int index = priorityAssetMap.keys
       .firstWhere((k) => priorityAssetMap[k] == priority, orElse: () => null);
   return index;
+}
+
+String getPriorityAssetString(int index) {
+  return priorityAssetMap[index];
 }

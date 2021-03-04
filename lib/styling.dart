@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/ui/utils/size_config.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/ui/utils/size_config.dart';
 
 class AppTheme {
   AppTheme._();
@@ -16,6 +16,7 @@ class AppTheme {
     scaffoldBackgroundColor: AppTheme.appBackgroundColor,
     brightness: Brightness.light,
     textTheme: lightTextTheme,
+    primaryColor: Color(0xFF0080FF),
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -68,13 +69,14 @@ class AppTheme {
 
   static final TextStyle _searchLight = TextStyle(
     color: Colors.black,
-    fontSize: 2.4 * SizeConfig.textMultiplier,
+    fontSize: 3 * SizeConfig.textMultiplier,
+    fontWeight: FontWeight.normal,
   );
 
   static final TextStyle _selectedTabLight = TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.bold,
-    fontSize: 2 * SizeConfig.textMultiplier,
+    fontSize: 2.5 * SizeConfig.textMultiplier,
   );
 
   static final TextStyle _unSelectedTabLight = TextStyle(

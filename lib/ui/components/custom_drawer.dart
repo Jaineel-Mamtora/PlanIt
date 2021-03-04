@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:PlanIt/colors.dart';
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/constants.dart';
-import 'package:PlanIt/services/firebase_authentication_service.dart';
+import 'package:plan_it/colors.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/constants.dart';
+import 'package:plan_it/services/firebase_authentication_service.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -67,7 +67,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 ],
               ),
-              FlatButton.icon(
+              TextButton.icon(
                 onPressed: () async {
                   _firebaseAuthenticationService.signOut();
                 },

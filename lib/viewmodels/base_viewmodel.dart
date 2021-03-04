@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:PlanIt/locator.dart';
-import 'package:PlanIt/enums/viewstate.dart';
-import 'package:PlanIt/enums/connectivity_status.dart';
-import 'package:PlanIt/services/connectivity_service.dart';
+import 'package:plan_it/locator.dart';
+import 'package:plan_it/enums/viewstate.dart';
+import 'package:plan_it/enums/connectivity_status.dart';
+import 'package:plan_it/services/connectivity_service.dart';
 
 class BaseViewModel extends ChangeNotifier {
   ViewState _state = ViewState.Idle;
