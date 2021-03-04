@@ -54,13 +54,17 @@ class CustomCard extends StatelessWidget {
         title: Text(
           TaskConstants.ACHIEVEMENT,
           style: TextStyle(
-            fontSize: 5 * SizeConfig.widthMultiplier,
+            fontSize: 2.5 * SizeConfig.heightMultiplier,
             color: Theme.of(context).primaryColorDark,
           ),
         ),
         content: Text(
           TaskConstants.DO_YOU_WANT_TO_MARK_THIS_TASK_AS_COMPLETED,
-          style: Theme.of(context).textTheme.bodyText2,
+          style: TextStyle(
+            fontSize: 2.3 * SizeConfig.heightMultiplier,
+            color: Colors.black,
+            fontWeight: FontWeight.normal,
+          ),
         ),
         actions: <Widget>[
           TextButton(
@@ -142,13 +146,17 @@ class CustomCard extends StatelessWidget {
               title: Text(
                 TaskConstants.ARE_YOU_SURE,
                 style: TextStyle(
-                  fontSize: 5 * SizeConfig.widthMultiplier,
+                  fontSize: 2.5 * SizeConfig.heightMultiplier,
                   color: Theme.of(context).primaryColorDark,
                 ),
               ),
               content: Text(
                 TaskConstants.DO_YOU_WANT_TO_REMOVE_PENDING_TASK,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: TextStyle(
+                  fontSize: 2.3 * SizeConfig.heightMultiplier,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               actions: <Widget>[
                 TextButton(
@@ -179,7 +187,7 @@ class CustomCard extends StatelessWidget {
           await refreshKey.currentState.show();
         },
         child: Container(
-          height: 10.93 * SizeConfig.heightMultiplier,
+          height: 10.8 * SizeConfig.heightMultiplier,
           child: Card(
             semanticContainer: false,
             shape: RoundedRectangleBorder(
@@ -210,8 +218,8 @@ class CustomCard extends StatelessWidget {
                       markAsCompleteComfirmationDialog(context: context),
                   child: SvgPicture.asset(
                     'assets/icons/check_circle.svg',
-                    height: 7.71 * SizeConfig.heightMultiplier,
-                    width: 15 * SizeConfig.widthMultiplier,
+                    height: 7.5 * SizeConfig.heightMultiplier,
+                    width: 14.75 * SizeConfig.widthMultiplier,
                   ),
                 ),
                 title: Text(
@@ -219,7 +227,7 @@ class CustomCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(
-                    fontSize: 3.08 * SizeConfig.heightMultiplier,
+                    fontSize: 2.9 * SizeConfig.heightMultiplier,
                   ),
                 ),
                 subtitle: Row(
@@ -227,14 +235,14 @@ class CustomCard extends StatelessWidget {
                     Text(
                       fromTime,
                       style: TextStyle(
-                        fontSize: 2.06 * SizeConfig.heightMultiplier,
+                        fontSize: 1.8 * SizeConfig.heightMultiplier,
                       ),
                     ),
                     taskEntity.toTime != null && taskEntity.toTime != 0
                         ? Text(
                             toTime,
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 1.8 * SizeConfig.heightMultiplier,
                             ),
                           )
                         : Container(width: 0, height: 0),
@@ -249,13 +257,13 @@ class CustomCard extends StatelessWidget {
                             ),
                             child: SvgPicture.asset(
                               getReminderSVG(taskEntity.priority),
-                              height: 2.06 * SizeConfig.heightMultiplier,
+                              height: 2 * SizeConfig.heightMultiplier,
                             ),
                           )
                         : taskEntity.priority == 0 && taskEntity.reminder != -1
                             ? SvgPicture.asset(
                                 'assets/icons/bell_notification.svg',
-                                width: 7.5 * SizeConfig.widthMultiplier,
+                                width: 7 * SizeConfig.widthMultiplier,
                               )
                             : Padding(
                                 padding: EdgeInsets.only(
@@ -269,12 +277,11 @@ class CustomCard extends StatelessWidget {
                                     children: <Widget>[
                                       SvgPicture.asset(
                                         getReminderSVG(taskEntity.priority),
-                                        height:
-                                            2.06 * SizeConfig.heightMultiplier,
+                                        height: 2 * SizeConfig.heightMultiplier,
                                       ),
                                       SvgPicture.asset(
                                         'assets/icons/bell_notification.svg',
-                                        width: 7.5 * SizeConfig.widthMultiplier,
+                                        width: 7 * SizeConfig.widthMultiplier,
                                       )
                                     ],
                                   ),

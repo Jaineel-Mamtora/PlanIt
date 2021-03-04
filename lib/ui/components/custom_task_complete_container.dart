@@ -53,11 +53,18 @@ class CustomTaskCompleteContainer extends StatelessWidget {
             builder: (ctx) => AlertDialog(
               title: Text(
                 TaskConstants.ARE_YOU_SURE,
-                style: Theme.of(context).textTheme.bodyText2,
+                style: TextStyle(
+                  fontSize: 2.5 * SizeConfig.heightMultiplier,
+                  color: Theme.of(context).primaryColorDark,
+                ),
               ),
               content: Text(
                 TaskConstants.DO_YOU_WANT_TO_REMOVE_COMPLETED_TASK,
-                style: Theme.of(context).textTheme.headline3,
+                style: TextStyle(
+                  fontSize: 2.3 * SizeConfig.heightMultiplier,
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               actions: <Widget>[
                 TextButton(
