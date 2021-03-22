@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
-import 'package:plan_it/ui/utils/size_config.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,6 +14,7 @@ import 'package:plan_it/enums/status.dart';
 import 'package:plan_it/enums/reminder.dart';
 import 'package:plan_it/enums/priority.dart';
 import 'package:plan_it/ui/views/base_view.dart';
+import 'package:plan_it/ui/utils/size_config.dart';
 import 'package:plan_it/viewmodels/task_viewmodel.dart';
 import 'package:plan_it/services/database_service.dart';
 import 'package:plan_it/managers/notification_handler.dart';
@@ -654,8 +654,6 @@ class _TaskViewState extends State<TaskView> {
                               );
                               return;
                             }
-                            // add logic of Time-Slot already added. Currently not working
-                            // also check for test case where only title is added and nothing else
                             if (model.isTaskTimeSlotOverlapping(
                                 fromTime: _selectedFromTime,
                                 toTime: _selectedToTime)) {
@@ -682,13 +680,12 @@ class _TaskViewState extends State<TaskView> {
                               );
                               int id;
                               if (widget.isEditing == true) {
-                                task.id = widget.task.id;
-                                id = await _databaseService
-                                    .update(task.toJson());
-                              } else {
-                                id = await _databaseService
-                                    .insert(task.toJson());
+                                await _databaseService.delete(widget.task.id);
+                                await NotificationHandler
+                                    .flutterLocalNotificationsPlugin
+                                    .cancel(widget.task.id);
                               }
+                              id = await _databaseService.insert(task.toJson());
                               if (_defaultReminderChoiceIndex >= 0) {
                                 await _notificationHandler
                                     .showBigTextNotification(

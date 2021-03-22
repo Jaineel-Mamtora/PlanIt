@@ -57,7 +57,7 @@ android {
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
 //            minifyEnabled false
@@ -81,5 +81,5 @@ flutter {
 }
 
 dependencies {
-    implementation "com.google.firebase:firebase-auth:20.0.2"
+    implementation "com.google.firebase:firebase-auth:20.0.3"
 }
