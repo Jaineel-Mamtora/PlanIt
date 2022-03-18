@@ -1,16 +1,34 @@
 # PlanIt
 
-Plan it and Organize.
+ - Developed the task scheduling app using Flutter for managing daily tasks.
+ - Implemented push notifications to remind users about previously planned tasks.
+ - Used SQLite to store data locally thereby enabling offline data access & zero privacy concern.
 
-## Getting Started
+→ Developing the application using:
 
-This project is a starting point for a Flutter application.
+ - Dart
+ - Java
+ - Flutter
+ - SQLite
+ - MVVM Architecture
 
-A few resources to get you started if this is your first Flutter project:
+## UI Screenshots:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<table>
+   <tr>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159016527-3c392dd1-e2fb-4432-9ed6-7d28f2f0c914.png" width="270" height="480" /></td>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159016606-efe01185-6881-4b4b-a4a2-e0af185b010d.png" width="270" height="480" /></td>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159016671-711a402b-17a4-4964-b535-64054b5ee49c.png" width="270" height="480" /></td>
+  </tr>
+ <tr>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159016737-879c4dc1-5172-42dc-99d8-c90c7d01bb0b.png" width="270" height="480" /></td>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159016799-40691495-d618-4998-8fe2-73439e645bba.png" width="270" height="480" /></td>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159017159-849a05a3-70f0-4fd8-b013-95d0d7a7131a.png" width="270" height="480" /></td>
+  </tr>
+ <tr>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159017315-921721f5-fcd9-426a-bf0f-3c8c0f43098a.png" width="270" height="480" /></td>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159017359-3f2809d2-dcda-4919-b950-21d3fa2dd1f4.png" width="270" height="480" /></td>
+     <td><img src = "https://user-images.githubusercontent.com/38665793/159017385-49236ac7-063d-4e0a-894c-ba764ef730d1.png" width="270" height="480" /></td>
+     <td></td>
+  </tr>
+</table>
